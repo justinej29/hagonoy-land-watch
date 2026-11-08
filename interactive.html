@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -385,6 +384,23 @@
     @media (max-width: 767px) {
       .hlw-map {
         height: 440px;
+      }
+    }
+
+    .hlw-map .leaflet-control-attribution {
+      text-align: left;
+    }
+
+    @media (min-width: 768px) {
+      .hlw-map .leaflet-bottom.leaflet-right {
+        right: auto;
+        left: 0;
+      }
+
+      .hlw-map .leaflet-bottom.leaflet-right .leaflet-control {
+        float: left;
+        margin-left: 0;
+        margin-right: 0;
       }
     }
 
