@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="How land subsidence affects homes, livelihoods, roads, schools, and health in Hagonoy's 26 barangays.">
+  <meta property="og:title" content="Community Impact (Hagonoy Land Watch)">
+  <meta property="og:type" content="website">
+  <title>Community Impact (Hagonoy Land Watch)</title>
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <style>
+    .site-footer .footer-col--credits,
+    .site-footer .footer-col--credits .footer-heading,
+    .site-footer .footer-col--credits .footer-credits,
+    .site-footer .footer-col--credits .footer-credits dt,
+    .site-footer .footer-col--credits .footer-credits dd {
+      text-align: center !important;
+    }
+
+    .site-footer .footer-col--credits .credit-name {
+      display: block;
+      margin: 0 0 4px;
+    }
+
+    .site-footer .footer-col--credits .credit-name:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body class="page-impact">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <nav class="site-nav-rail" aria-label="Main navigation">
+    <a href="index.html" class="nav-rail-brand" aria-label="Hagonoy Land Watch (Home)">
+     <img class="nav-rail-brand-icon" src="assets/icon.png" alt="" width="40" height="40">
+        <rect x="4" y="22" width="24" height="4" rx="2" fill="#7A3F1A" />
+        <rect x="4" y="17" width="24" height="4" rx="2" fill="#9E5528" />
+        <rect x="4" y="12" width="24" height="4" rx="2" fill="#C17B30" />
+        <path d="M8 12 Q16 4 24 12" stroke="#E9A344" stroke-width="1.5" fill="none" stroke-linecap="round" />
+        <path d="M11 12 Q16 7 21 12" stroke="#E9A344" stroke-width="1" fill="none" stroke-linecap="round"
+          opacity="0.6" />
+      </svg>
+      <span class="nav-rail-brand-text">Hagonoy<br>Land Watch</span>
+    </a>
+    <div class="nav-rail-geo" aria-hidden="true">
+      <svg viewBox="0 0 56 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 9 Q14 3 28 7 Q42 11 54 5" stroke="#E9A344" stroke-width="0.7" opacity="0.5" fill="none" />
+        <path d="M2 6 Q14 1 28 4 Q42 7 54 2" stroke="#E9A344" stroke-width="0.5" opacity="0.3" fill="none" />
+      </svg>
+    </div>
+    <div class="nav-rail-items">
+      <a href="index.html" class="nav-rail-item" aria-label="Home">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        <span class="nav-rail-label">Home</span>
+      </a>
+      <a href="about.html" class="nav-rail-item" aria-label="About Land Subsidence">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <polyline points="10 9 9 9 8 9" />
+        </svg>
+        <span class="nav-rail-label">About</span>
+      </a>
+      <a href="causes-effects.html" class="nav-rail-item" aria-label="Causes and Effects">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+        </svg>
+        <span class="nav-rail-label">Causes</span>
+      </a>
+      <div class="nav-rail-divider" aria-hidden="true"></div>
+      <a href="community-impact.html" class="nav-rail-item" aria-current="page" aria-label="Community Impact">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        <span class="nav-rail-label">Impact</span>
+      </a>
+      <a href="solutions.html" class="nav-rail-item" aria-label="Solutions">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+        </svg>
+        <span class="nav-rail-label">Solutions</span>
+      </a>
+      <div class="nav-rail-divider" aria-hidden="true"></div>
+      <a href="interactive.html" class="nav-rail-item" aria-label="Interactive Map and Quiz">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+          <line x1="8" y1="2" x2="8" y2="18" />
+          <line x1="16" y1="6" x2="16" y2="22" />
+        </svg>
+        <span class="nav-rail-label">Map</span>
+      </a>
+      <a href="references.html" class="nav-rail-item" aria-label="References and Sources">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>
+        <span class="nav-rail-label">Sources</span>
+      </a>
+    </div>
+    <div class="nav-rail-footer">
+      <span class="nav-rail-footer-text">HLW &copy; 2026</span>
+    </div>
+  </nav>
+
+  <header class="site-topbar" role="banner">
+    <div class="topbar-inner">
+      <a href="index.html" class="topbar-site-name" aria-label="Hagonoy Land Watch (Home)">
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+          <rect x="4" y="22" width="24" height="4" rx="2" fill="#7A3F1A" />
+          <rect x="4" y="17" width="24" height="4" rx="2" fill="#9E5528" />
+          <rect x="4" y="12" width="24" height="4" rx="2" fill="#C17B30" />
+          <path d="M8 12 Q16 4 24 12" stroke="#E9A344" stroke-width="1.5" fill="none" stroke-linecap="round" />
+        </svg>
+        Hagonoy Land Watch
+      </a>
+      <button class="nav-menu-btn" id="nav-menu-btn" aria-expanded="false" aria-controls="nav-drawer"
+        aria-label="Open navigation menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+        Menu
+      </button>
+    </div>
+  </header>
+
+  <div class="nav-drawer-overlay" id="nav-drawer-overlay" aria-hidden="true"></div>
+
+  <nav class="nav-drawer" id="nav-drawer" aria-label="Main navigation" aria-hidden="true">
+    <div class="nav-drawer-header">
+      <a href="index.html" class="nav-drawer-brand" aria-label="Hagonoy Land Watch (Home)">
+        <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect x="4" y="22" width="24" height="4" rx="2" fill="#7A3F1A" />
+          <rect x="4" y="17" width="24" height="4" rx="2" fill="#9E5528" />
+          <rect x="4" y="12" width="24" height="4" rx="2" fill="#C17B30" />
+          <path d="M8 12 Q16 4 24 12" stroke="#E9A344" stroke-width="1.5" fill="none" />
+        </svg>
+        Hagonoy Land Watch
+      </a>
+      <button class="nav-drawer-close" id="nav-drawer-close" aria-label="Close navigation menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <div class="nav-drawer-items">
+      <a href="index.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        Home
+      </a>
+      <a href="about.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+        </svg>
+        About
+      </a>
+      <a href="causes-effects.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+        </svg>
+        Causes
+      </a>
+      <a href="community-impact.html" class="nav-drawer-item" aria-current="page">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        Impact
+      </a>
+      <a href="solutions.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+        </svg>
+        Solutions
+      </a>
+      <a href="interactive.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+          <line x1="8" y1="2" x2="8" y2="18" />
+          <line x1="16" y1="6" x2="16" y2="22" />
+        </svg>
+        Map &amp; Quiz
+      </a>
+      <a href="references.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>
+        Sources
+      </a>
+    </div>
+    <div class="nav-drawer-footer">Hagonoy Land Watch &mdash; School Project</div>
+  </nav>
+
+  <main id="main-content">
+
+    <div class="page-header-band">
+      <div class="container">
+        <span class="eyebrow">Real lives, real effects</span>
+        <h1>Community Impact</h1>
+        <p class="lead lead--wide">Land subsidence does not just affect the ground. It touches homes, work, health, and
+          the future of every family in Hagonoy.</p>
+      </div>
+    </div>
+
+    <section class="section bg-cream" aria-labelledby="homes-heading">
+      <div class="container">
+        <span class="eyebrow">Where people live</span>
+        <h2 id="homes-heading">Homes and Residential Areas</h2>
+        <div class="amber-bar" aria-hidden="true"></div>
+        <p class="section-lead">For most families in Hagonoy, their home is their most important asset. When the ground
+          beneath it shifts, the costs can be both financial and emotional, and can be devastating.</p>
+
+        <div class="impact-cards impact-cards--3">
+          <div class="impact-card fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://newsinfo.inquirer.net/2270577/house-collapses-in-zamboanga-del-sur-due-to-soil-erosion"
+                  target="_blank" rel="noopener noreferrer">newsinfo.inquirer.net</a></span>
+              <img class="card-img" src="assets/Structural Damage.png"
+                alt="House with structural damage caused by shifting ground" loading="lazy">
+            </div>
+            <h3>Structural Damage</h3>
+            <p>Cracks appear in walls and floors. Doors and windows jam. Foundations tilt. In severe cases a house may
+              become unsafe to live in and require costly repair or demolition.</p>
+          </div>
+          <div class="impact-card fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.dutchwatersector.com/news/crowdfunding-halfway-for-first-floating-homes-in-hagonoy-philippines"
+                  target="_blank" rel="noopener noreferrer">dutchwatersector.com</a></span>
+              <img class="card-img" src="assets/Repeated Flooding.png" alt="Homes in Hagonoy surrounded by floodwater"
+                loading="lazy">
+            </div>
+            <h3>Repeated Flooding</h3>
+            <p>Homes near rivers flood more often as the ground sinks. Families spend days cleaning up and replacing
+              damaged belongings, with no lasting solution in sight.</p>
+          </div>
+          <div class="impact-card fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.facebook.com/groups/ancestralhousesinthephilippines/posts/25057993603831216/"
+                  target="_blank" rel="noopener noreferrer">facebook.com</a></span>
+              <img class="card-img" src="assets/Loss of Property Value.png"
+                alt="Old house affected by flooding, losing its property value" loading="lazy">
+            </div>
+            <h3>Loss of Property Value</h3>
+            <p>A home in a frequently flooded area is worth less. Selling becomes difficult. Some families find
+              themselves trapped in a place that is slowly becoming unlivable.</p>
+          </div>
+        </div>
+
+        <figure class="img-figure fade-in">
+          <figcaption class="img-source">Source: <a
+              href="https://www.onenews.ph/articles/in-photos-living-amid-flood-in-hagonoy-bulacan" target="_blank"
+              rel="noopener noreferrer">OneNews.ph</a></figcaption>
+          <img class="wide-img" src="assets/homes showing subsidence damage or flood marks.png"
+            alt="Flooded street in Hagonoy at night, with a resident wading through floodwater beside houses"
+            loading="lazy">
+        </figure>
+
+        <blockquote class="community-voice fade-in" style="margin-top:var(--sp-32);"
+          aria-label="Sample community voice (not a real quote)">
+          <p>"Every time there's a typhoon, the water now comes up to the door. Before, it never reached the house. We
+            had to put our furniture on top of tables."</p>
+        </blockquote>
+
+        <div class="barangay-examples fade-in">
+          <h3>Barangay-Level Examples</h3>
+          <p>Barangay San Sebastian is one of the clearest local examples of how subsidence and tidal flooding combine.
+            Its public cemetery has been flooded for almost a decade, even on days without rain or typhoons, and the
+            municipality has had to place sandbags and flood barriers along the nearby river. Municipal officials also
+            report that the town as a whole is sinking by about 10 cm a year, which keeps pushing the tide line further
+            into low-lying barangays like this one.</p>
+          <p>Residents of San Sebastian, including its youth leaders, have said that flooding here has been treated as
+            normal for too long. This example shows how the problem reaches not only homes and roads but also community
+            spaces such as cemeteries and schools.</p>
+          <p class="img-source" style="margin-bottom:0;">Sources:
+            <a href="https://mb.com.ph/2025/10/29/sandbags-flood-barriers-installed-near-hagonoy-public-cemetery-ahead-of-undas"
+              target="_blank" rel="noopener noreferrer">Manila Bulletin (Oct 2025)</a>,
+            <a href="https://plus.inquirer.net/news/in-flooded-bulacan-town-the-dead-need-dry-ground" target="_blank"
+              rel="noopener noreferrer">Inquirer Plus</a>,
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <span class="soil-divider" aria-hidden="true"></span>
+
+    <section class="section bg-parchment" aria-labelledby="livelihoods-heading">
+      <div class="container">
+        <span class="eyebrow">Work and income</span>
+        <h2 id="livelihoods-heading">Livelihoods: Fishponds and Farming</h2>
+        <div class="amber-bar" aria-hidden="true"></div>
+        <p class="section-lead">Hagonoy has a long tradition of fishing, aquaculture, and rice farming. Land subsidence
+          puts all of these livelihoods at serious risk.</p>
+        <div class="impact-cards">
+          <div class="impact-card fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.facebook.com/photo?fbid=251607698993535&set=pcb.251607725660199" target="_blank"
+                  rel="noopener noreferrer">facebook.com</a></span>
+              <img class="card-img" src="assets/Fishpond Flooding and Damage.png"
+                alt="Fishpond dike breached and flooding the pond" loading="lazy">
+            </div>
+            <h3>Fishpond Flooding and Damage</h3>
+            <p>As the ground sinks, fishpond dikes are more likely to be overtopped or breached during floods. Fish
+              escape and ponds need expensive repair each time.</p>
+          </div>
+          <div class="impact-card fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.sciencedirect.com/science/article/abs/pii/S2215153226000115" target="_blank"
+                  rel="noopener noreferrer">Sciencedirect.com</a></span>
+              <img class="card-img" src="assets/Saltwater Intrusion Into Ponds.png" alt="Saltwater intrusion into ponds"
+                loading="lazy">
+            </div>
+            <h3>Saltwater Intrusion Into Ponds</h3>
+            <p>When seawater flows into freshwater fishponds, freshwater species die. Farmers must change fish species
+              or abandon the pond entirely, which represents a major financial loss.</p>
+          </div>
+          <div class="impact-card fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.facebook.com/photo?fbid=1259538172844677&set=pcb.1259538282844666" target="_blank"
+                  rel="noopener noreferrer">facebook.com</a></span>
+              <img class="card-img" src="assets/Rice Farm Waterlogging.png" alt="Rice farm waterlogging" loading="lazy">
+            </div>
+            <h3>Rice Farm Waterlogging</h3>
+            <p>Paddy fields that sit lower than before hold water too long after rains. This damages crops, shortens the
+              growing season, and reduces harvests and family income.</p>
+          </div>
+          <div class="impact-card fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.facebook.com/pnagovph/posts/look-riprap-works-at-hagonoy-river-in-bulacan-located-in-barangay-abulalas-on-sa/493201976189595/"
+                  target="_blank" rel="noopener noreferrer">facebook.com</a></span>
+              <img class="card-img" src="assets/Higher Costs for Farmers.png" alt="Higher costs for farmers"
+                loading="lazy">
+            </div>
+            <h3>Higher Costs for Farmers</h3>
+            <p>Dike repairs, pump maintenance, and crop losses add up. Farming income drops while costs rise. Some
+              families are forced to seek work outside Hagonoy.</p>
+          </div>
+        </div>
+
+        <blockquote class="community-voice fade-in" style="margin-top:var(--sp-32);"
+          aria-label="Sample community voice (not a real quote)">
+          <p>"We used to harvest twice a year from our fishpond. Now, after bad typhoons, we spend months just fixing
+            the dikes. We barely break even."</p>
+        </blockquote>
+
+        <figure class="img-figure fade-in">
+          <figcaption class="img-source">Source: <a href="https://www.instagram.com/p/DdBEnrhk5TQ/" target="_blank"
+              rel="noopener noreferrer">instagram.com</a></figcaption>
+          <img class="wide-img" src="assets/fishponds or rice fields in Hagonoy affected by subsidence and flooding.png"
+            alt="Fishponds and rice farms affected by subsidence" loading="lazy">
+        </figure>
+      </div>
+    </section>
+
+    <span class="soil-divider" aria-hidden="true"></span>
+
+    <section class="section bg-cream" aria-labelledby="roads-heading">
+      <div class="container">
+        <span class="eyebrow">Getting around</span>
+        <h2 id="roads-heading">Roads and Infrastructure</h2>
+        <div class="amber-bar" aria-hidden="true"></div>
+        <p class="section-lead">Roads and bridges connect Hagonoy's barangays to each other and to the rest of Bulacan.
+          When the ground sinks, these lifelines weaken.</p>
+        <div class="callout callout--terra fade-in">
+          <div class="callout-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </div>
+          <div class="callout-body">
+            <h3>Road Surface Damage</h3>
+            <p>Roads in low-lying areas crack and buckle as the ground shifts beneath them. Patches wear out faster than
+              on stable ground. During floods, submerged roads are harder to navigate safely. Emergency vehicles such as
+              ambulances and fire trucks may be delayed, putting lives at risk.</p>
+          </div>
+        </div>
+        <div class="callout callout--amber fade-in" style="margin-top:var(--sp-24);">
+          <div class="callout-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+          </div>
+          <div class="callout-body">
+            <h3>Water and Drainage Systems</h3>
+            <p>Underground water pipes and drainage canals designed for a specific slope no longer drain correctly once
+              the ground settles unevenly. This leads to sewer backups, standing water, and risks of waterborne disease
+              from contaminated water sources.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <span class="soil-divider" aria-hidden="true"></span>
+
+    <section class="section bg-parchment" aria-labelledby="schools-heading">
+      <div class="container">
+        <span class="eyebrow">Education and well-being</span>
+        <h2 id="schools-heading">Schools, Health, and Safety</h2>
+        <div class="amber-bar" aria-hidden="true"></div>
+        <p class="section-lead">The effects of land subsidence reach into schools and health centres, the places
+          communities depend on most.</p>
+        <div class="impact-cards">
+          <div class="impact-card fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a href="https://share.google/9RuO0U8K2DhXpyxMF"
+                  target="_blank" rel="noopener noreferrer">share.google.com</a></span>
+              <img class="card-img" src="assets/school or health center in Hagonoy affected by flooding.png"
+                alt="School building in Hagonoy used as evacuation centre during flooding" loading="lazy">
+            </div>
+            <h3>Schools as Evacuation Centres</h3>
+            <p>When flooding gets severe, school buildings become evacuation shelters. This interrupts classes for days
+              or weeks, causing students to miss crucial learning time.</p>
+          </div>
+          <div class="impact-card fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www1.racgp.org.au/ajgp/2018/march/leptospirosis" target="_blank"
+                  rel="noopener noreferrer">www1.racgp.org.au</a></span>
+              <img class="card-img" src="assets/Waterborne Illness.png"
+                alt="Health center in Hagonoy affected by flooding" loading="lazy">
+            </div>
+            <h3>Waterborne Illness</h3>
+            <p>Floodwater often carries sewage and disease-causing bacteria. Children and elderly residents are most at
+              risk from waterborne illnesses such as leptospirosis and diarrhoea.</p>
+          </div>
+          <div class="impact-card fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.google.com/imgres?imgurl=https://theknowfresno.org/wp-content/uploads/2022/08/Jordan-Jackson-Mental-Health-Illustration-by-Ashens-Limon.jpg&tbnid=yvZI62HX17I1eM&vet=1&imgrefurl=https://theknowfresno.org/08/18/2022/how-stress-and-exhaustion-tie-into-mental-health/&docid=nO39pAhEqBbAGM&w=1410&h=1443&hl=en-PH&source=sh/x/im/m1/0&kgs=932d2db8d51a51f3"
+                  target="_blank" rel="noopener noreferrer">theknowfresno.org</a></span>
+              <img class="card-img" src="assets/Stress and Mental Health.png"
+                alt="Family in Hagonoy affected by flooding, showing stress and mental health strain" loading="lazy">
+            </div>
+            <h3>Stress and Mental Health</h3>
+            <p>Constant threat of flooding causes significant stress. Families that repeatedly lose belongings
+              experience lasting emotional and financial strain that is hard to recover from.</p>
+          </div>
+          <div class="impact-card fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.philstar.com/headlines/2026/08/30/2552752/backflood-high-tide-inundate-71-bulacan-villages"
+                  target="_blank" rel="noopener noreferrer">philstar.com</a></span>
+              <img class="card-img" src="assets/Disrupted Supply Chains.png"
+                alt="Flooded road in Hagonoy delaying food and medicine delivery" loading="lazy">
+            </div>
+            <h3>Disrupted Supply Chains</h3>
+            <p>Flooded roads delay food, medicine, and other supplies. Prices rise in isolated barangays during and
+              after flood events, hitting the poorest families hardest.</p>
+          </div>
+        </div>
+
+        <div class="barangay-examples fade-in" style="margin-top:var(--sp-32);">
+          <h3>Barangay-Level Example: Palapat</h3>
+          <p>Palapat, in Hagonoy East District, was among the barangays whose schools stayed flood-free in earlier
+            reports, but a local councilor has noted that even upland areas like Palapat have recently reported
+            flooding. Federico C. Suntay Elementary School serves this community, and its pupils are affected whenever
+            the municipality suspends classes. In late August and early September 2026, Hagonoy suspended face-to-face
+            classes for all levels, public and private, because of habagat flooding.</p>
+          <p>The loss of learning time is felt across the town. During the second week of School Year 2026-2027, tides
+            of 4.9 to 5.2 feet forced many Hagonoy schools to switch to modular and online learning, and at least one
+            school reported families moving their children elsewhere to escape the flooding.</p>
+          <p class="img-source" style="margin-bottom:0;">Sources:
+            <a href="https://www.manilatimes.net/2026/08/28/news/classes-suspended-in-metro-manila-other-provinces-as-rainfall-alerts-up-due-to-habagat/2413854"
+              target="_blank" rel="noopener noreferrer">The Manila Times</a>,
+            <a href="https://www.philstar.com/headlines/2026/09/09/2555061/walang-pasok-class-suspensions-september-9-due-habagat"
+              target="_blank" rel="noopener noreferrer">Philstar</a>,
+          </p>
+        </div>
+
+        <figure class="img-figure fade-in">
+          <figcaption class="img-source">Source: <a
+              href="https://www.facebook.com/photo?fbid=1461636709346966&set=pcb.1461636786013625" target="_blank"
+              rel="noopener noreferrer">facebook.com</a></figcaption>
+          <img class="wide-img" src="assets/school or health center in Hagonoy affected by flooding.png"
+            alt="School building in Hagonoy used as evacuation centre during flooding" loading="lazy">
+        </figure>
+      </div>
+    </section>
+
+    <section class="cta-band" aria-labelledby="impact-cta-heading">
+      <div class="container">
+        <h2 id="impact-cta-heading">There Are Things We Can Do</h2>
+        <p>These problems are serious but not hopeless. Individual actions, community programmes, and government
+          measures can all help reduce the impact.</p>
+        <a href="solutions.html" class="btn btn-cta">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          Explore Solutions
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>About This Site</h3>
+          <p>Hagonoy Land Watch is a community awareness project about land subsidence (<span lang="fil" style="color:#ffffff;">paglubog ng
+              lupa</span>) in Hagonoy, Bulacan, Philippines.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="causes-effects.html">Causes &amp; Effects</a></li>
+            <li><a href="community-impact.html">Community Impact</a></li>
+            <li><a href="solutions.html">Solutions</a></li>
+            <li><a href="interactive.html">Interactive</a></li>
+            <li><a href="references.html">References</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-col--credits">
+          <h3 class="footer-heading">Project Credits</h3>
+          <dl class="footer-credits">
+            <dt>Student / Group</dt>
+            <dd class="verify">
+              <span class="credit-name">John Paul F. Carlos</span>
+              <span class="credit-name">Justine James V. Dela Cruz</span>
+              <span class="credit-name">Geron Adrian E. Jose</span>
+              <span class="credit-name">John Lenard C. Romeroso</span>
+              <span class="credit-name">Ishi B. Trillana</span>
+            </dd>
+            <dt>Course</dt>
+            <dd class="verify">MST 101A - ENVIRONMENTAL SCIENCE</dd>
+            <dt>School</dt>
+            <dd class="verify">Bulacan State University Hagonoy Campus</dd>
+            <dt>Submitted</dt>
+            <dd class="verify">November 8, 2026</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="footer-disclaimer" role="note">
+        <strong>Disclaimer:</strong> This is a school project. It is not an official government website. For
+        emergencies, call <strong>911</strong>.
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 Hagonoy Land Watch (School project)</p>
+        <a href="#main-content" class="back-to-top" aria-label="Back to top">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            aria-hidden="true" focusable="false">
+            <polyline points="18 15 12 9 6 15" />
+          </svg>
+          Back to top
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+</body>
+
+</html>

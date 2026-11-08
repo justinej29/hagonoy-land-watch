@@ -1,0 +1,12 @@
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Community Impact",
+            "type": "msedge",
+            "request": "launch",
+            "file": "C:\\gawainJJ\\ES\\community-impact.html"
+        }
+    ]
+}

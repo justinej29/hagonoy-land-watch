@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About (Hagonoy Land Watch)</title>
+  <meta name="description"
+    content="Learn about land subsidence (paglubog ng lupa) in Hagonoy, Bulacan and why it is a serious risk for the community." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <style>
+    .page-about .warning-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      list-style: none;
+      margin: 20px 0 0;
+      padding: 0;
+      max-width: none;
+      width: 100%;
+    }
+
+    .page-about .warning-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      padding: 16px 18px;
+      text-align: center;
+    }
+
+    .page-about .warning-item .warning-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      margin: 0 auto;
+      color: var(--color-terracotta, #B83A2A);
+    }
+
+    .page-about .warning-item .warning-title {
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--color-terracotta, #B83A2A);
+      text-align: center;
+    }
+
+    .page-about .warning-item .warning-desc {
+      display: block;
+      width: 100%;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--color-text-body);
+      text-align: center;
+    }
+
+    @media (max-width: 767px) {
+      .page-about .warning-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .site-footer .footer-col--credits,
+    .site-footer .footer-col--credits .footer-heading,
+    .site-footer .footer-col--credits .footer-credits,
+    .site-footer .footer-col--credits .footer-credits dt,
+    .site-footer .footer-col--credits .footer-credits dd {
+      text-align: center !important;
+    }
+
+    .site-footer .footer-col--credits .credit-name {
+      display: block;
+      margin: 0 0 4px;
+    }
+
+    .site-footer .footer-col--credits .credit-name:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body class="page-about">
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <nav class="site-nav-rail" aria-label="Main navigation">
+    <a href="index.html" class="nav-rail-brand" aria-label="Hagonoy Land Watch (Home)">
+   <img class="nav-rail-brand-icon" src="assets/icon.png" alt="" width="40" height="40">
+        <rect x="4" y="22" width="24" height="4" rx="2" fill="#7A3F1A" />
+        <rect x="4" y="17" width="24" height="4" rx="2" fill="#9E5528" />
+        <rect x="4" y="12" width="24" height="4" rx="2" fill="#C17B30" />
+        <path d="M8 12 Q16 4 24 12" stroke="#E9A344" stroke-width="1.5" fill="none" stroke-linecap="round" />
+        <path d="M11 12 Q16 7 21 12" stroke="#E9A344" stroke-width="1" fill="none" stroke-linecap="round"
+          opacity="0.6" />
+      </svg>
+      <span class="nav-rail-brand-text">Hagonoy<br>Land Watch</span>
+    </a>
+    <div class="nav-rail-geo" aria-hidden="true">
+      <svg viewBox="0 0 56 12" fill="none">
+        <path d="M2 9 Q14 3 28 7 Q42 11 54 5" stroke="#E9A344" stroke-width="0.7" opacity="0.5" fill="none" />
+        <path d="M2 6 Q14 1 28 4 Q42 7 54 2" stroke="#E9A344" stroke-width="0.5" opacity="0.3" fill="none" />
+      </svg>
+    </div>
+    <div class="nav-rail-items">
+      <a href="index.html" class="nav-rail-item" aria-label="Home"><svg width="22" height="22" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true" focusable="false">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg><span class="nav-rail-label">Home</span></a>
+      <a href="about.html" class="nav-rail-item" aria-current="page" aria-label="About"><svg width="22" height="22"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+        </svg><span class="nav-rail-label">About</span></a>
+      <a href="causes-effects.html" class="nav-rail-item" aria-label="Causes"><svg width="22" height="22"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+        </svg><span class="nav-rail-label">Causes</span></a>
+      <div class="nav-rail-divider" aria-hidden="true"></div>
+      <a href="community-impact.html" class="nav-rail-item" aria-label="Impact"><svg width="22" height="22"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg><span class="nav-rail-label">Impact</span></a>
+      <a href="solutions.html" class="nav-rail-item" aria-label="Solutions"><svg width="22" height="22"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+        </svg><span class="nav-rail-label">Solutions</span></a>
+      <div class="nav-rail-divider" aria-hidden="true"></div>
+      <a href="interactive.html" class="nav-rail-item" aria-label="Map"><svg width="22" height="22" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true" focusable="false">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+          <line x1="8" y1="2" x2="8" y2="18" />
+          <line x1="16" y1="6" x2="16" y2="22" />
+        </svg><span class="nav-rail-label">Map</span></a>
+      <a href="references.html" class="nav-rail-item" aria-label="Sources"><svg width="22" height="22"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg><span class="nav-rail-label">Sources</span></a>
+    </div>
+    <div class="nav-rail-footer"><span class="nav-rail-footer-text">HLW &copy; 2026</span></div>
+  </nav>
+
+  <header class="site-topbar" role="banner">
+    <div class="topbar-inner">
+      <a href="index.html" class="topbar-site-name" aria-label="Hagonoy Land Watch (Home)">
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+          <rect x="4" y="22" width="24" height="4" rx="2" fill="#7A3F1A" />
+          <rect x="4" y="17" width="24" height="4" rx="2" fill="#9E5528" />
+          <rect x="4" y="12" width="24" height="4" rx="2" fill="#C17B30" />
+          <path d="M8 12 Q16 4 24 12" stroke="#E9A344" stroke-width="1.5" fill="none" stroke-linecap="round" />
+        </svg>
+        Hagonoy Land Watch
+      </a>
+      <button class="nav-menu-btn" id="nav-menu-btn" aria-expanded="false" aria-controls="nav-drawer"
+        aria-label="Open navigation menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+        Menu
+      </button>
+    </div>
+  </header>
+
+  <div class="nav-drawer-overlay" id="nav-drawer-overlay" aria-hidden="true"></div>
+
+  <nav class="nav-drawer" id="nav-drawer" aria-label="Main navigation" aria-hidden="true">
+    <div class="nav-drawer-header">
+      <a href="index.html" class="nav-drawer-brand"><svg width="22" height="22" viewBox="0 0 32 32" fill="none"
+          aria-hidden="true">
+          <rect x="4" y="22" width="24" height="4" rx="2" fill="#7A3F1A" />
+          <rect x="4" y="17" width="24" height="4" rx="2" fill="#9E5528" />
+          <rect x="4" y="12" width="24" height="4" rx="2" fill="#C17B30" />
+          <path d="M8 12 Q16 4 24 12" stroke="#E9A344" stroke-width="1.5" fill="none" />
+        </svg>Hagonoy Land Watch</a>
+      <button class="nav-drawer-close" id="nav-drawer-close" aria-label="Close navigation menu"><svg width="18"
+          height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+          aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg></button>
+    </div>
+    <div class="nav-drawer-items">
+      <a href="index.html" class="nav-drawer-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>Home</a>
+      <a href="about.html" class="nav-drawer-item" aria-current="page"><svg width="20" height="20" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+        </svg>About</a>
+      <a href="causes-effects.html" class="nav-drawer-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+        </svg>Causes</a>
+      <a href="community-impact.html" class="nav-drawer-item"><svg width="20" height="20" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+        </svg>Impact</a>
+      <a href="solutions.html" class="nav-drawer-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+        </svg>Solutions</a>
+      <a href="interactive.html" class="nav-drawer-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+        </svg>Map &amp; Quiz</a>
+      <a href="references.html" class="nav-drawer-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>Sources</a>
+    </div>
+    <div class="nav-drawer-footer">Hagonoy Land Watch &mdash; School Project</div>
+  </nav>
+
+
+  <main id="main-content">
+
+    <div class="page-header-band">
+      <div class="container">
+        <p class="eyebrow">Understanding the basics</p>
+        <h1>About Land Subsidence</h1>
+        <p class="lead lead--wide">Land subsidence, known locally as <em lang="fil" style="color:#ffffff;">paglubog ng lupa</em>, is the
+          gradual sinking of the ground surface. In Hagonoy, Bulacan, it is one of the most pressing environmental
+          challenges facing the community today.</p>
+      </div>
+    </div>
+
+    <section class="section bg-cream" aria-labelledby="definition-heading">
+      <div class="container">
+        <div class="about-definition-layout">
+          <div class="about-definition-text">
+            <p class="eyebrow">What it is</p>
+            <h2 id="definition-heading">Defining Land Subsidence</h2>
+            <div class="amber-bar" aria-hidden="true"></div>
+            <p>Land subsidence is the downward movement of the ground surface relative to a fixed reference point, such
+              as sea level. It can be slow and imperceptible, usually only a few millimeters per year, or rapid enough
+              to cause visible structural damage over months.</p>
+            <p>In low-lying coastal and deltaic areas like Hagonoy, even a few centimeters of subsidence can
+              dramatically increase flood risk, cause saltwater to intrude into freshwater sources, and undermine the
+              foundations of homes and public infrastructure.</p>
+            <p>Unlike earthquakes or landslides, subsidence is largely invisible until significant damage has already
+              occurred, making monitoring and early awareness critically important.</p>
+          </div>
+
+          <div class="about-definition-side">
+            <figure class="about-definition-diagram">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.workybooks.com/reader/limited-freshwater-availability-and-the-groundwater-table"
+                  target="_blank" rel="noopener noreferrer">Workybooks.com</a></span>
+              <img class="diagram-img" src="assets/Cross-section diagram_ground sinking above aquifer.png"
+                alt="Diagram showing the process of land subsidence: a normal groundwater table on the left and a lowered groundwater table causing land subsidence on the right"
+                loading="lazy">
+            </figure>
+
+            <div class="callout callout--amber">
+              <div class="callout-body">
+                <p><strong>Key Point:</strong> Land subsidence in the Philippines is <em>not</em> a rare event. A study
+                  of major Philippine metropolitan areas found its highest sinking rate, up to
+                  <strong>109 mm per year</strong>, in Bulacan Province (Sulapas et al., 2024). In Hagonoy and
+                  Calumpit, subsidence rates between 2015 and the first quarter of 2021 reached
+                  <strong>124.51 mm per year</strong> near high-extraction zones (Maclang et al., 2026).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section bg-parchment" aria-labelledby="how-heading">
+      <div class="container">
+        <p class="eyebrow">The process</p>
+        <h2 id="how-heading">How Does It Happen?</h2>
+        <div class="amber-bar" aria-hidden="true"></div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number" aria-hidden="true">1</div>
+            <h3>Groundwater Is Extracted</h3>
+            <p>When water is pumped from underground aquifers faster than it can be replenished through rainfall and
+              natural recharge, the water pressure inside the soil layers decreases significantly. Prolonged
+              groundwater withdrawal reduces the support provided by underground water, increasing the risk of land
+              subsidence (Barlow &amp; Leake, 2012).</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number" aria-hidden="true">2</div>
+            <h3>Soil Layers Compact</h3>
+            <p>Without sufficient water pressure supporting the soil structure, fine-grained sediments such as clay,
+              silt, and peat compress under the weight of the overlying materials. As water is squeezed out of their
+              pore spaces, these sediments become denser, and the compaction may be permanent (Poland &amp; Davis,
+              1969).</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number" aria-hidden="true">3</div>
+            <h3>Ground Surface Sinks</h3>
+            <p>As the underlying sediment layers compact, the ground surface gradually sinks. In delta regions built
+              on soft sediments, this process is intensified by the natural settling and compression of unconsolidated
+              materials deposited by rivers over thousands of years. Excessive groundwater extraction can further
+              accelerate this process (Galloway et al., 1999).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section bg-cream" aria-labelledby="why-heading">
+      <div class="container">
+        <p class="eyebrow">Local context</p>
+        <h2 id="why-heading">Why Is Hagonoy Affected?</h2>
+        <div class="amber-bar" aria-hidden="true"></div>
+        <p class="section-lead">Several geographic and socioeconomic factors make Hagonoy, Bulacan particularly
+          vulnerable to land subsidence.</p>
+        <div class="impact-cards">
+
+          <div class="impact-card">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://northmanilabayfps.ireport.royalhaskoningdhv.com/updated-protection-strategy/root-cause--analysis/storm-surges"
+                  target="_blank" rel="noopener noreferrer">North Manila Bay FPS</a></span>
+              <img class="card-img" src="assets/Delta Location.png" alt="Delta location of Hagonoy" loading="lazy">
+            </div>
+            <h3>Delta Location</h3>
+            <p>Hagonoy sits on the Pampanga River delta, an area built of soft, compressible sediments deposited over
+              centuries. These sediments are naturally prone to settling and compaction.</p>
+          </div>
+
+          <div class="impact-card">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.facebook.com/photo/?fbid=3527771494047127&amp;set=pcb.26513376861637792"
+                  target="_blank" rel="noopener noreferrer">facebook.com</a></span>
+              <img class="card-img" src="assets/Heavy Groundwater Use.png" alt="Heavy groundwater use in Hagonoy"
+                loading="lazy">
+            </div>
+            <h3>Heavy Groundwater Use</h3>
+            <p>Many households, fish ponds, and small industries in the area rely on deep wells for their water supply,
+              depleting aquifers and accelerating soil compaction below.</p>
+          </div>
+
+          <div class="impact-card">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.facebook.com/photo?fbid=28521370544118639&amp;set=pcb.28521548444100849"
+                  target="_blank" rel="noopener noreferrer">facebook.com</a></span>
+              <img class="card-img" src="assets/Low Elevation.png" alt="Low elevation of Hagonoy" loading="lazy">
+            </div>
+            <h3>Low Elevation</h3>
+            <p>Much of Hagonoy lies at or near sea level. Even minor subsidence brings areas below the tidal line,
+              making them susceptible to permanent or seasonal flooding.</p>
+          </div>
+
+          <div class="impact-card">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.rappler.com/moveph/how-tricycle-drivers-bulacan-adjust-dwell-coastal-flood/"
+                  target="_blank" rel="noopener noreferrer">Rappler.com</a></span>
+              <img class="card-img" src="assets/Rising Sea Levels.png" alt="Rising sea levels near Hagonoy"
+                loading="lazy">
+            </div>
+            <h3>Rising Sea Levels</h3>
+            <p>Global sea-level rise compounds subsidence. When the ground sinks and the sea rises simultaneously, the
+              relative difference can be twice as severe as either factor alone.</p>
+          </div>
+
+        </div>
+
+        <figure class="img-figure fade-in">
+          <figcaption class="img-source">Source: <a href="https://share.google/JZH4O16GdZK5UJwmD" target="_blank"
+              rel="noopener noreferrer">Angat River in Hagonoy</a></figcaption>
+          <img class="wide-img" src="assets/aerial view of Hagonoy showing its delta location and river network.png"
+            alt="Aerial view of Hagonoy showing its delta location and river network" loading="lazy">
+        </figure>
+      </div>
+    </section>
+
+    <section class="section bg-parchment" aria-labelledby="warning-heading">
+      <div class="container">
+        <p class="eyebrow">Recognizing the signs</p>
+        <h2 id="warning-heading">Warning Signs of Subsidence</h2>
+        <div class="amber-bar" aria-hidden="true"></div>
+        <p class="text-wide">Residents and community members can watch for the following indicators that ground
+          subsidence may be occurring in their area.</p>
+        <ul class="warning-list" role="list">
+          <li class="warning-item">
+            <svg class="warning-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" aria-hidden="true">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            <h3 class="warning-title">Cracks in walls or floors</h3>
+            <span class="warning-desc">Diagonal or stair-step cracks in masonry that widen over time without an
+              associated earthquake.</span>
+          </li>
+          <li class="warning-item">
+            <svg class="warning-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" aria-hidden="true">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            <h3 class="warning-title">Doors and windows that no longer close properly</h3>
+            <span class="warning-desc">Frames may shift as the building foundation settles unevenly.</span>
+          </li>
+          <li class="warning-item">
+            <svg class="warning-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" aria-hidden="true">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            <h3 class="warning-title">Floors that are no longer level</h3>
+            <span class="warning-desc">Noticeable tilting of house floors or outdoor surfaces such as driveways and
+              pathways.</span>
+          </li>
+          <li class="warning-item">
+            <svg class="warning-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" aria-hidden="true">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            <h3 class="warning-title">Increased flooding frequency</h3>
+            <span class="warning-desc">Areas that did not flood before are now inundated during moderate rain or high
+              tides.</span>
+          </li>
+          <li class="warning-item">
+            <svg class="warning-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" aria-hidden="true">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            <h3 class="warning-title">Saltwater in wells or fishponds</h3>
+            <span class="warning-desc">Saltwater intrusion into freshwater wells or the brackish takeover of
+              previously freshwater fish ponds.</span>
+          </li>
+          <li class="warning-item">
+            <svg class="warning-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" aria-hidden="true">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            <h3 class="warning-title">Roads cracking or buckling</h3>
+            <span class="warning-desc">Pavement developing sinkholes, depressions, or waves without apparent cause from
+              heavy traffic alone.</span>
+          </li>
+          <li class="warning-item">
+            <svg class="warning-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" aria-hidden="true">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            <h3 class="warning-title">Lowered well water levels</h3>
+            <span class="warning-desc">Groundwater becoming harder to reach, requiring deeper wells or pump upgrades to
+              extract.</span>
+          </li>
+          <li class="warning-item">
+            <svg class="warning-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" aria-hidden="true">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            <h3 class="warning-title">Separation of structures from the ground</h3>
+            <span class="warning-desc">Gaps appearing between building foundations and the surrounding soil, or steps
+              pulling away from thresholds.</span>
+          </li>
+        </ul>
+
+      </div>
+    </section>
+
+
+    <section class="section bg-cream" aria-labelledby="glossary-heading">
+      <div class="container">
+        <p class="eyebrow">Key terminology</p>
+        <h2 id="glossary-heading">Glossary</h2>
+        <div class="amber-bar" aria-hidden="true"></div>
+        <p class="text-wide">Understanding these terms will help you follow discussions about land subsidence in
+          scientific reports, news
+          articles, and government documents.</p>
+        <dl class="glossary-list">
+          <div class="glossary-item">
+            <dt><strong>Land Subsidence</strong></dt>
+            <dd>The downward movement of the ground surface relative to a fixed datum such as mean sea level. It can be
+              a gradual settling or a sudden sinking, and it can be caused by natural processes or by human activities
+              such as groundwater withdrawal (Galloway et al., 1999).</dd>
+          </div>
+          <div class="glossary-item">
+            <dt><strong>Aquifer</strong></dt>
+            <dd>An underground layer of permeable rock, sediment, or soil that holds groundwater and yields it to wells
+              and springs (U.S. Geological Survey, n.d.-a). Heavy withdrawal from aquifers is a leading cause of land
+              subsidence (Galloway et al., 1999).</dd>
+          </div>
+          <div class="glossary-item">
+            <dt><strong>Groundwater</strong></dt>
+            <dd>Water held underground in the saturated zone beneath the water table, stored in aquifers (U.S.
+              Geological Survey, n.d.-a). It is a vital resource for drinking and agriculture, but excessive pumping can
+              cause compaction of the layers above (Poland &amp; Davis, 1969).</dd>
+          </div>
+          <div class="glossary-item">
+            <dt><strong>Compaction</strong></dt>
+            <dd>The process by which soil particles are pressed more closely together, reducing the volume of pore
+              spaces. When groundwater is removed, fine-grained sediments such as clay and silt can compact, and this
+              compaction is often permanent (Poland &amp; Davis, 1969).</dd>
+          </div>
+          <div class="glossary-item">
+            <dt><strong>Saltwater Intrusion</strong></dt>
+            <dd>The movement of saltwater into underground sources of freshwater. Groundwater pumping can reduce the
+              freshwater flow toward the coast and draw saltwater into the freshwater zones of an aquifer (U.S.
+              Geological Survey, n.d.-b).</dd>
+          </div>
+          <div class="glossary-item">
+            <dt><strong>Geohazard</strong></dt>
+            <dd>A geological condition or process that poses a danger to people, property, or infrastructure. In the
+              Philippines, DENR-MGB assesses and maps geohazards such as rain-induced landslides, floods, and subsidence
+              (Mines and Geosciences Bureau, n.d.).</dd>
+          </div>
+          <div class="glossary-item">
+            <dt><strong>Delta</strong></dt>
+            <dd>A landform created by the deposition of sediment where a river enters a slower or standing body of
+              water such as a bay or sea (National Park Service, n.d.). Deltas are built from soft sediments that can
+              compact over time (Soria et al., 2005).</dd>
+          </div>
+          <div class="glossary-item">
+            <dt><strong>PHIVOLCS</strong></dt>
+            <dd>The Philippine Institute of Volcanology and Seismology, a service institute of the Department of
+              Science and Technology (DOST). It is mandated to mitigate disasters that may arise from volcanic
+              eruptions, earthquakes, tsunamis, and related geotectonic phenomena (Philippine Institute of Volcanology
+              and Seismology, n.d.).</dd>
+          </div>
+          <div class="glossary-item">
+            <dt><strong>DENR-MGB</strong></dt>
+            <dd>The Mines and Geosciences Bureau, an agency under the Department of Environment and Natural Resources.
+              It implements the National Geohazard Assessment and Mapping Program, which produces hazard maps for
+              rain-induced landslides, floods, coastal hazards, and karst subsidence (Mines and Geosciences Bureau,
+              n.d.).</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <div class="cta-band">
+      <div class="container">
+        <div class="cta-band-inner">
+          <div class="cta-band-text">
+            <h2>Want to See the Map?</h2>
+            <p>Explore barangay-level vulnerability data, test your knowledge with our quiz, and report observations
+              from your community.</p>
+          </div>
+          <a href="interactive.html" class="btn btn--primary">Explore Interactive Tools</a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>About This Site</h3>
+          <p>Hagonoy Land Watch is a community awareness project about land subsidence (<span lang="fil" style="color:#ffffff;">paglubog ng
+              lupa</span>) in Hagonoy, Bulacan, Philippines.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="causes-effects.html">Causes &amp; Effects</a></li>
+            <li><a href="community-impact.html">Community Impact</a></li>
+            <li><a href="solutions.html">Solutions</a></li>
+            <li><a href="interactive.html">Interactive</a></li>
+            <li><a href="references.html">References</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-col--credits">
+          <h3 class="footer-heading">Project Credits</h3>
+          <dl class="footer-credits">
+            <dt>Student / Group</dt>
+            <dd class="verify">
+              <span class="credit-name">John Paul F. Carlos</span>
+              <span class="credit-name">Justine James V. Dela Cruz</span>
+              <span class="credit-name">Geron Adrian E. Jose</span>
+              <span class="credit-name">John Lenard C. Romeroso</span>
+              <span class="credit-name">Ishi B. Trillana</span>
+            </dd>
+            <dt>Course</dt>
+            <dd class="verify">MST 101A - ENVIRONMENTAL SCIENCE</dd>
+            <dt>School</dt>
+            <dd class="verify">Bulacan State University Hagonoy Campus</dd>
+            <dt>Submitted</dt>
+            <dd class="verify">November 8, 2026</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="footer-disclaimer" role="note">
+        <strong>Disclaimer:</strong> This is a school project. It is not an official government website. For
+        emergencies, call <strong>911</strong>.
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 Hagonoy Land Watch (School project)</p>
+        <a href="#main-content" class="back-to-top" aria-label="Back to top">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            aria-hidden="true" focusable="false">
+            <polyline points="18 15 12 9 6 15" />
+          </svg>
+          Back to top
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,3481 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Explore the Hagonoy barangay vulnerability map, take the land subsidence quiz, read FAQs, and report a problem in your area.">
+  <meta property="og:title" content="Interactive (Hagonoy Land Watch)">
+  <meta property="og:type" content="website">
+  <title>Interactive (Hagonoy Land Watch)</title>
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    .sub-nav {
+      position: fixed;
+      top: 0;
+      left: var(--nav-rail-w, 72px);
+      right: 0;
+      z-index: 250;
+      background: var(--color-soil);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.30);
+      height: 52px;
+      display: flex;
+      align-items: center;
+    }
+
+    @media (max-width: 1023px) {
+      .sub-nav {
+        position: fixed;
+        top: var(--topbar-h, 52px);
+        left: 0;
+        right: 0;
+      }
+    }
+
+    .sub-nav-inner {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      max-width: var(--container-max);
+      margin-inline: auto;
+      padding-inline: var(--container-pad);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .sub-nav-inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    .sub-nav-inner a {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 var(--sp-20);
+      height: 52px;
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-sand-light);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 3px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+    }
+
+    .sub-nav-inner a:hover {
+      color: var(--color-cream);
+      border-bottom-color: rgba(193, 123, 48, 0.5);
+    }
+
+    .sub-nav-inner a.active {
+      color: var(--color-amber-light);
+      border-bottom-color: var(--color-amber);
+    }
+
+    .sub-nav-inner a:focus-visible {
+      outline: 3px solid var(--color-amber);
+      outline-offset: -3px;
+      border-radius: 2px;
+    }
+
+    @media (max-width: 480px) {
+      .sub-nav-inner a {
+        padding: 0 var(--sp-16);
+        font-size: 14px;
+      }
+    }
+
+    .interactive-section {
+      scroll-margin-top: 68px;
+    }
+
+    @media (max-width: 1023px) {
+      .interactive-section {
+        scroll-margin-top: 120px;
+      }
+    }
+
+    .map-section-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: var(--sp-24);
+      align-items: stretch;
+      margin-top: var(--sp-24);
+    }
+
+    @media (max-width: 1023px) {
+      .map-section-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .map-container {
+      background: var(--color-white);
+      border-radius: 20px;
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      border: 1.5px solid var(--color-sand);
+    }
+
+    .map-toolbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--sp-16);
+      padding: 14px 16px;
+      background: var(--color-parchment);
+      border-bottom: 1px solid var(--color-sand);
+    }
+
+    @media (max-width: 700px) {
+      .map-toolbar {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .map-filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .map-toolbar-label {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--color-text-muted);
+    }
+
+    .map-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-8);
+      margin: 0;
+    }
+
+    .filter-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 2px solid var(--color-sand);
+      background: var(--color-white);
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-body);
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .filter-pill:hover {
+      border-color: var(--color-clay);
+      background: var(--color-cream);
+    }
+
+    .filter-pill.active {
+      background: var(--color-soil-warm);
+      border-color: var(--color-soil-warm);
+      color: var(--color-cream);
+    }
+
+    .filter-pill:focus-visible {
+      outline: 3px solid var(--color-amber);
+      outline-offset: 2px;
+    }
+
+    .pill-count {
+      min-width: 22px;
+      padding: 1px 7px;
+      border-radius: 999px;
+      background: rgba(46, 21, 3, 0.09);
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .filter-pill.active .pill-count {
+      background: rgba(255, 255, 255, 0.24);
+    }
+
+    .show-list-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      align-self: end;
+      background: var(--color-soil-warm);
+      color: var(--color-cream);
+      border: 2px solid var(--color-soil-warm);
+      border-radius: 12px;
+      padding: 9px 18px;
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(46, 21, 3, 0.18);
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+
+    @media (max-width: 700px) {
+      .show-list-btn {
+        width: 100%;
+        align-self: stretch;
+      }
+    }
+
+    .show-list-btn:hover {
+      background: var(--color-soil);
+      border-color: var(--color-soil);
+    }
+
+    .show-list-btn.is-open {
+      background: var(--color-white);
+      color: var(--color-soil-warm);
+    }
+
+    .show-list-btn.is-open:hover {
+      background: var(--color-cream);
+    }
+
+    .show-list-btn:focus-visible {
+      outline: 3px solid var(--color-amber);
+      outline-offset: 2px;
+    }
+
+    .barangay-list-view {
+      display: none;
+      max-height: 320px;
+      overflow-y: auto;
+      padding: 16px;
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-sand);
+      box-shadow: inset 0 -8px 12px -10px rgba(46, 21, 3, 0.18);
+    }
+
+    .barangay-list-view.visible {
+      display: block;
+    }
+
+    .list-summary {
+      margin: 0 0 12px;
+      max-width: none;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-align: left;
+    }
+
+    .list-empty {
+      margin: 0;
+      max-width: none;
+      padding: 12px 0;
+      font-size: 14px;
+      text-align: center;
+      color: var(--color-text-muted);
+    }
+
+    .barangay-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 8px;
+    }
+
+    .list-item-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid var(--color-sand);
+      border-radius: 12px;
+      background: var(--color-parchment);
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-dark);
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s, transform 0.18s;
+    }
+
+    .list-item-btn:hover {
+      border-color: var(--color-clay);
+      background: var(--color-cream);
+      transform: translateY(-1px);
+    }
+
+    .list-item-btn.is-selected {
+      border-color: var(--color-soil-warm);
+      background: var(--color-amber-tint);
+    }
+
+    .list-item-btn:focus-visible {
+      outline: 3px solid var(--color-amber);
+      outline-offset: 2px;
+    }
+
+    .list-num {
+      flex-shrink: 0;
+      min-width: 26px;
+      height: 26px;
+      padding: 0 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: var(--color-white);
+      border: 1.5px solid var(--color-sand);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-soil-warm);
+    }
+
+    .list-name {
+      flex: 1;
+      min-width: 0;
+      line-height: 1.25;
+    }
+
+    .list-risk {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+    }
+
+    .list-risk svg {
+      display: block;
+      max-width: none;
+    }
+
+    .hlw-map {
+      position: relative;
+      width: 100%;
+      height: clamp(460px, 64vh, 660px);
+      background: #D9E2E7;
+      z-index: 0;
+    }
+
+    @media (max-width: 767px) {
+      .hlw-map {
+        height: 440px;
+      }
+    }
+
+    .hlw-marker {
+      background: none;
+      border: none;
+    }
+
+    #map-svg-wrapper .hlw-marker svg {
+      width: 28px !important;
+      height: 28px !important;
+      max-width: none !important;
+      display: block !important;
+    }
+
+    #map-svg-wrapper .leaflet-control-attribution svg {
+      width: 12px !important;
+      height: 8px !important;
+      display: inline-block !important;
+    }
+
+    .hlw-marker:focus-visible {
+      outline: 3px solid var(--color-amber);
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    .leaflet-container {
+      font-family: var(--font-body);
+    }
+
+    .leaflet-bar.hlw-ctrl {
+      border: none;
+      box-shadow: 0 2px 8px rgba(46, 21, 3, 0.25);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .leaflet-bar.hlw-ctrl a {
+      width: auto;
+      height: auto;
+      line-height: 1;
+      padding: 10px 14px;
+      background: #fff;
+      color: var(--color-soil);
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .leaflet-bar.hlw-ctrl a:hover {
+      background: var(--color-parchment);
+    }
+
+    .leaflet-control-layers {
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 2px 8px rgba(46, 21, 3, 0.25);
+    }
+
+    .leaflet-tooltip {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 13px;
+      border-radius: 8px;
+    }
+
+    .map-caption {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 12px 16px;
+      box-sizing: border-box;
+      font-size: 13px;
+      line-height: 1.5;
+      font-style: normal;
+      text-align: justify;
+      text-justify: inter-word;
+      color: var(--color-text-muted);
+      background: var(--color-parchment);
+      border-top: 1px solid var(--color-sand);
+    }
+
+    .map-caption svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .map-caption span {
+      flex: 1;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .risk-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .risk-badge svg {
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .risk-badge--high {
+      background: var(--color-terracotta-tint);
+      color: var(--color-terracotta);
+    }
+
+    .risk-badge--moderate {
+      background: var(--color-amber-tint);
+      color: var(--color-amber-hover);
+    }
+
+    .risk-badge--low {
+      background: var(--color-green-tint);
+      color: var(--color-green-dark);
+    }
+
+    .risk-badge--none {
+      background: var(--color-sand-pale);
+      color: var(--color-neutral);
+    }
+
+    .map-section-layout > div:first-child {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .map-section-layout > div:first-child > .map-container {
+      flex: 1;
+    }
+
+    .map-section-layout > div,
+    .map-section-layout > .map-right-panel {
+      margin: 0 !important;
+      padding: 0 !important;
+      top: 0 !important;
+      transform: none !important;
+      align-self: stretch !important;
+    }
+
+    .map-section-layout .map-container,
+    .map-section-layout .map-legend {
+      margin-top: 0 !important;
+    }
+
+    .map-right-panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-16);
+      position: static !important;
+      min-width: 0;
+    }
+
+    .map-right-panel > .map-details-panel {
+      flex: 1;
+    }
+
+    .map-legend {
+      background: var(--color-white);
+      border-radius: 20px;
+      box-shadow: var(--shadow-card);
+      border: 1.5px solid var(--color-sand);
+      padding: var(--sp-20);
+    }
+
+    .map-legend h3 {
+      font-size: 16px;
+      margin: 0 0 var(--sp-12) 0;
+      color: var(--color-text-dark);
+    }
+
+    .legend-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: var(--color-parchment);
+      font-size: 14px;
+      color: var(--color-text-body);
+    }
+
+    .legend-marker {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .legend-text {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      line-height: 1.25;
+    }
+
+    .legend-text strong {
+      color: var(--color-text-dark);
+    }
+
+    .legend-text small {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      text-transform: capitalize;
+    }
+
+    .legend-count {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--color-soil-warm);
+    }
+
+    .legend-note {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--color-text-muted);
+      margin: var(--sp-12) 0 0;
+      max-width: none;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .map-details-panel {
+      position: relative;
+      overflow: hidden;
+      background: var(--color-white);
+      border-radius: 20px;
+      box-shadow: var(--shadow-card);
+      border: 1.5px solid var(--color-sand);
+      padding: var(--sp-20);
+      min-height: 180px;
+    }
+
+    .map-details-panel.has-selection {
+      padding-top: calc(var(--sp-20) + 6px);
+    }
+
+    .map-details-panel:not(.has-selection) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .map-details-panel:not(.has-selection) .details-placeholder {
+      padding: var(--sp-20) 0;
+    }
+
+    .map-details-panel.has-selection::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: var(--color-sand);
+    }
+
+    .map-details-panel--high::before {
+      background: var(--color-terracotta) !important;
+    }
+
+    .map-details-panel--moderate::before {
+      background: var(--color-amber) !important;
+    }
+
+    .map-details-panel--low::before {
+      background: var(--color-earth-green) !important;
+    }
+
+    .map-details-panel--none::before {
+      background: var(--color-neutral) !important;
+    }
+
+    .map-details-panel .details-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-8);
+      text-align: center;
+      color: var(--color-text-muted);
+      padding: var(--sp-24) 0;
+    }
+
+    .map-details-panel .details-placeholder svg {
+      opacity: 0.4;
+    }
+
+    .map-details-panel .details-placeholder p {
+      text-align: center;
+      margin: 0;
+    }
+
+    .details-head {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .details-title {
+      font-size: 22px;
+      margin: 0;
+      color: var(--color-text-dark);
+    }
+
+    .details-reason {
+      font-size: 15px;
+      line-height: 1.65;
+      margin: 14px 0 0;
+      max-width: none;
+      text-align: justify;
+      text-justify: inter-word;
+      color: var(--color-text-body);
+    }
+
+    .details-basis {
+      margin: 12px 0 0;
+      padding: 10px 12px;
+      max-width: none;
+      text-align: justify;
+      text-justify: inter-word;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #4A5568;
+      background: var(--color-parchment);
+      border-left: 3px solid var(--color-amber);
+      border-radius: 8px;
+    }
+
+    .details-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 480px) {
+      .details-links {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .details-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 8px 12px;
+      border: 2px solid var(--color-soil-warm);
+      border-radius: 12px;
+      background: var(--color-white);
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--color-soil-warm);
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+    }
+
+    .details-link svg {
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .details-link:hover {
+      background: var(--color-soil-warm);
+      color: var(--color-cream);
+    }
+
+    .details-link--primary {
+      background: var(--color-soil-warm);
+      color: var(--color-cream);
+    }
+
+    .details-link--primary:hover {
+      background: var(--color-soil);
+      border-color: var(--color-soil);
+    }
+
+    .details-link--primary.is-zoomed {
+      background: var(--color-amber-tint);
+      color: var(--color-soil-warm);
+    }
+
+    .details-link--primary.is-zoomed:hover {
+      background: var(--color-soil-warm);
+      color: var(--color-cream);
+    }
+
+    .details-link:focus-visible {
+      outline: 3px solid var(--color-amber);
+      outline-offset: 2px;
+    }
+
+    .quiz-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: var(--sp-24) 0;
+    }
+
+    .quiz-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--color-white);
+      border: 1.5px solid var(--color-sand);
+      border-radius: 999px;
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-soil-warm);
+    }
+
+    .quiz-wrapper {
+      max-width: 780px;
+      margin-inline: auto;
+    }
+
+    .quiz-progress-label {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-soil-warm);
+      margin-bottom: var(--sp-8);
+    }
+
+    .quiz-progress-bar-track {
+      height: 12px;
+      background: #EFE3CF;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: var(--sp-24);
+    }
+
+    #quiz-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--color-amber), var(--color-earth-green));
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .quiz-question-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--color-white);
+      border-radius: 24px;
+      box-shadow: 0 14px 40px rgba(46, 21, 3, 0.12);
+      border: 1.5px solid var(--color-sand);
+      padding: 40px 36px 36px;
+    }
+
+    .quiz-question-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--color-soil-warm), var(--color-amber), var(--color-sand));
+    }
+
+    #quiz-question-text {
+      font-size: 22px;
+      font-weight: 600;
+      font-family: var(--font-heading);
+      color: var(--color-text-dark);
+      margin: 0 0 var(--sp-24) 0;
+      line-height: 1.45;
+      max-width: none;
+    }
+
+    #quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-12);
+      counter-reset: opt;
+    }
+
+    .quiz-option-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      text-align: left;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 2px solid var(--color-sand);
+      background: var(--color-parchment);
+      font-size: 17px;
+      color: var(--color-text-body);
+      cursor: pointer;
+      transition: all 0.18s;
+      font-family: var(--font-body);
+      line-height: 1.4;
+    }
+
+    .quiz-option-btn::before {
+      counter-increment: opt;
+      content: counter(opt, upper-alpha);
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: var(--color-white);
+      border: 2px solid var(--color-sand);
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-soil-warm);
+      transition: all 0.18s;
+    }
+
+    .quiz-option-btn:hover:not(:disabled) {
+      border-color: var(--color-clay);
+      background: var(--color-cream);
+      transform: translateX(3px);
+    }
+
+    .quiz-option-btn:hover:not(:disabled)::before {
+      background: var(--color-soil-warm);
+      border-color: var(--color-soil-warm);
+      color: var(--color-cream);
+    }
+
+    .quiz-option-btn:focus-visible {
+      outline: 3px solid var(--color-amber);
+      outline-offset: 2px;
+    }
+
+    .quiz-option-btn.correct {
+      border-color: var(--color-earth-green);
+      background: var(--color-green-tint);
+      color: var(--color-green-dark);
+    }
+
+    .quiz-option-btn.correct::before {
+      content: '\2713';
+      background: var(--color-earth-green);
+      border-color: var(--color-earth-green);
+      color: #fff;
+    }
+
+    .quiz-option-btn.incorrect {
+      border-color: var(--color-terracotta);
+      background: var(--color-terracotta-tint);
+      color: var(--color-terracotta-deep);
+    }
+
+    .quiz-option-btn.incorrect::before {
+      content: '\2715';
+      background: var(--color-terracotta);
+      border-color: var(--color-terracotta);
+      color: #fff;
+    }
+
+    .quiz-option-btn:disabled:not(.correct):not(.incorrect) {
+      opacity: 0.55;
+      cursor: default;
+    }
+
+    .quiz-feedback {
+      margin-top: var(--sp-16);
+      padding: var(--sp-16) var(--sp-20);
+      border-radius: 14px;
+      font-size: 16px;
+      line-height: 1.6;
+      text-align: justify;
+      text-justify: inter-word;
+      display: none;
+    }
+
+    .quiz-feedback.correct-fb {
+      display: block;
+      background: var(--color-green-tint);
+      border-left: 5px solid var(--color-earth-green);
+      color: var(--color-green-dark);
+    }
+
+    .quiz-feedback.incorrect-fb {
+      display: block;
+      background: var(--color-terracotta-tint);
+      border-left: 5px solid var(--color-terracotta);
+      color: var(--color-terracotta-deep);
+    }
+
+    .quiz-feedback .quiz-source,
+    .quiz-feedback [class*="source"] {
+      display: block;
+      margin-top: 8px;
+      text-align: left;
+    }
+
+    #quiz-next-btn {
+      display: none;
+      margin-top: var(--sp-20);
+    }
+
+    .quiz-score-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--color-white);
+      border-radius: 24px;
+      box-shadow: 0 14px 40px rgba(46, 21, 3, 0.12);
+      border: 1.5px solid var(--color-sand);
+      padding: var(--sp-48) var(--sp-32);
+      text-align: center;
+      display: none;
+    }
+
+    .quiz-score-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--color-soil-warm), var(--color-amber), var(--color-earth-green));
+    }
+
+    .quiz-score-card.visible {
+      display: block;
+    }
+
+    .score-medal {
+      width: 76px;
+      height: 76px;
+      margin: 0 auto var(--sp-16);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-amber-tint);
+      color: var(--color-soil-warm);
+      border: 3px solid var(--color-amber);
+    }
+
+    .score-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-family: var(--font-heading);
+      color: var(--color-text-muted);
+      margin: 0 0 var(--sp-8);
+      text-align: center;
+    }
+
+    #quiz-score-number {
+      font-family: var(--font-heading);
+      font-size: 60px;
+      font-weight: 700;
+      color: var(--color-soil);
+      line-height: 1;
+      margin-bottom: var(--sp-12);
+      text-align: center;
+    }
+
+    #quiz-score-message {
+      font-size: 18px;
+      color: var(--color-text-body);
+      margin: 0 auto var(--sp-24);
+      max-width: 420px;
+      text-align: center;
+    }
+
+    .faq-layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: var(--sp-32);
+      align-items: start;
+      margin-top: var(--sp-24);
+    }
+
+    @media (max-width: 1023px) {
+      .faq-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .faq-aside {
+      position: sticky;
+      top: 76px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-16);
+    }
+
+    @media (max-width: 1023px) {
+      .faq-aside {
+        position: static;
+      }
+    }
+
+    .faq-toc {
+      background: var(--color-white);
+      border: 1.5px solid var(--color-sand);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .faq-toc h3 {
+      margin: 0 0 10px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--color-text-muted);
+    }
+
+    .faq-toc a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-text-dark);
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .faq-toc a:hover {
+      background: var(--color-parchment);
+      color: var(--color-soil-warm);
+    }
+
+    .faq-toc a svg {
+      color: var(--color-clay);
+      flex-shrink: 0;
+    }
+
+    .faq-list {
+      max-width: none;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-32);
+    }
+
+    .faq-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      scroll-margin-top: 84px;
+    }
+
+    .faq-group-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .faq-group-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-amber-tint);
+      color: var(--color-soil-warm);
+      flex-shrink: 0;
+    }
+
+    .faq-group-head h3 {
+      margin: 0;
+      font-size: 21px;
+      color: var(--color-text-dark);
+    }
+
+    .faq-item {
+      background: var(--color-white);
+      border: 1.5px solid var(--color-sand);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .faq-item:hover {
+      border-color: var(--color-clay);
+    }
+
+    .faq-item:has(.faq-question[aria-expanded="true"]) {
+      border-color: var(--color-amber);
+      box-shadow: 0 8px 24px rgba(46, 21, 3, 0.10);
+    }
+
+    .faq-question {
+      width: 100%;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-16);
+      padding: 16px 20px;
+      background: none;
+      border: 0;
+      text-align: left;
+      font-family: var(--font-heading);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--color-text-dark);
+      cursor: pointer;
+      transition: color 0.18s;
+    }
+
+    .faq-question:hover {
+      color: var(--color-soil-warm);
+      background: none;
+    }
+
+    .faq-question:focus-visible {
+      outline: 3px solid var(--color-amber);
+      outline-offset: -3px;
+      border-radius: 14px;
+    }
+
+    .faq-question[aria-expanded="true"] {
+      color: var(--color-soil-warm);
+      background: none;
+      border-bottom: 0;
+    }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--color-parchment);
+      color: var(--color-soil-warm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.18s, transform 0.25s;
+    }
+
+    .faq-question[aria-expanded="true"] .faq-icon {
+      background: var(--color-amber-tint);
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      display: block;
+      overflow: hidden;
+      max-height: 0;
+      padding: 0 20px;
+      transition: max-height 0.35s ease, padding 0.25s ease;
+    }
+
+    .faq-answer[hidden] {
+      display: none;
+    }
+
+    .faq-answer.open,
+    .faq-answer.is-open {
+      max-height: 900px;
+      padding-bottom: 20px;
+    }
+
+    .faq-answer p,
+    .faq-answer ul,
+    .faq-answer ol {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--color-text-body);
+      margin: 0 0 var(--sp-12) 0;
+      max-width: none;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .faq-answer p:last-child,
+    .faq-answer ul:last-child {
+      margin-bottom: 0;
+    }
+
+    .faq-answer ul {
+      padding-left: 22px;
+    }
+
+    .faq-answer li {
+      margin-bottom: 6px;
+    }
+
+    .faq-answer strong {
+      color: var(--color-text-dark);
+    }
+
+    .faq-answer a {
+      color: var(--color-soil-warm);
+    }
+
+    .report-layout {
+      display: grid;
+      grid-template-columns: 340px minmax(0, 1fr);
+      gap: var(--sp-32);
+      align-items: start;
+      margin-top: var(--sp-24);
+    }
+
+    @media (max-width: 1023px) {
+      .report-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .report-aside {
+      position: sticky;
+      top: 76px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-24);
+    }
+
+    @media (max-width: 1023px) {
+      .report-aside {
+        position: static;
+      }
+    }
+
+    .report-aside > .emergency-notice,
+    .report-aside > .report-tips,
+    .report-aside > .report-note {
+      margin: 0 !important;
+    }
+
+    .emergency-notice {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-12);
+      background: var(--color-terracotta-tint);
+      border: 2px solid var(--color-terracotta);
+      border-radius: 18px;
+      padding: 18px 20px;
+      font-size: 15px;
+      color: var(--color-terracotta-deep);
+      line-height: 1.6;
+    }
+
+    .emergency-notice svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--color-terracotta);
+    }
+
+    .emergency-notice div {
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .emergency-notice strong {
+      color: var(--color-terracotta);
+    }
+
+    .report-tips {
+      background: linear-gradient(145deg, var(--color-soil), var(--color-soil-warm));
+      color: var(--color-cream);
+      border-radius: 18px;
+      padding: 24px 22px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .report-tips h3 {
+      margin: 0 0 14px;
+      font-size: 18px;
+      color: var(--color-cream);
+    }
+
+    .report-tips ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .report-tips li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: var(--color-sand-light);
+    }
+
+    .report-tips li span {
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .report-tips li svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--color-amber-light);
+    }
+
+    .report-tips li strong {
+      color: var(--color-cream);
+    }
+
+    .report-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--color-white);
+      border: 1.5px solid var(--color-sand);
+      border-radius: 18px;
+      padding: 16px 18px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--color-text-muted);
+      box-shadow: var(--shadow-card);
+    }
+
+    .report-note svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--color-clay);
+    }
+
+    .report-note p {
+      margin: 0;
+      max-width: none;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .report-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--color-white);
+      border: 1.5px solid var(--color-sand);
+      border-radius: 24px;
+      box-shadow: 0 14px 40px rgba(46, 21, 3, 0.12);
+    }
+
+    .report-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--color-soil-warm), var(--color-amber), var(--color-sand));
+    }
+
+    .report-card-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 32px 32px 20px;
+      border-bottom: 1px solid var(--color-sand-pale);
+    }
+
+    .report-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-amber-tint);
+      color: var(--color-soil-warm);
+      flex-shrink: 0;
+    }
+
+    .report-card-head h3 {
+      margin: 0;
+      font-size: 22px;
+      color: var(--color-text-dark);
+    }
+
+    .report-card-head p {
+      margin: 2px 0 0;
+      max-width: none;
+      text-align: left;
+      font-size: 14px;
+      color: var(--color-text-muted);
+    }
+
+    .report-card-body {
+      padding: 28px 32px 32px;
+    }
+
+    .error-summary {
+      display: none;
+      background: var(--color-terracotta-tint);
+      border: 2px solid var(--color-terracotta);
+      border-radius: 14px;
+      padding: var(--sp-16) var(--sp-20);
+      margin-bottom: var(--sp-24);
+    }
+
+    .error-summary.visible {
+      display: block;
+    }
+
+    .error-summary h3 {
+      font-size: 16px;
+      color: var(--color-terracotta);
+      margin: 0 0 var(--sp-8) 0;
+    }
+
+    .error-summary ul {
+      margin: 0;
+      padding-left: 20px;
+      font-size: 15px;
+      color: var(--color-terracotta-deep);
+    }
+
+    .form-note-line {
+      margin: 0 0 var(--sp-24);
+      font-size: 14px;
+      color: var(--color-text-muted);
+    }
+
+    .form-step {
+      display: flex;
+      gap: 18px;
+      padding-bottom: var(--sp-24);
+      margin-bottom: var(--sp-24);
+      border-bottom: 1px dashed var(--color-sand);
+    }
+
+    .form-step:last-of-type {
+      border-bottom: 0;
+      margin-bottom: var(--sp-16);
+      padding-bottom: 0;
+    }
+
+    .form-step-num {
+      width: 34px;
+      height: 34px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-soil-warm);
+      color: var(--color-cream);
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .form-step-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .form-step-content .form-field:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-field {
+      margin-bottom: var(--sp-24);
+    }
+
+    .form-field fieldset {
+      border: 0;
+      margin: 0;
+      padding: 0;
+      min-width: 0;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: var(--font-heading);
+      color: var(--color-text-dark);
+      margin-bottom: 6px;
+      padding: 0;
+    }
+
+    .form-label .required-mark {
+      color: var(--color-terracotta);
+      margin-left: 3px;
+    }
+
+    .form-hint {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      margin: 0 0 10px;
+      max-width: none;
+      text-align: left;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      height: 52px;
+      padding: 0 16px;
+      border: 2px solid var(--color-input-border);
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: var(--font-body);
+      color: var(--color-text-body);
+      background: var(--color-parchment);
+      box-sizing: border-box;
+      transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+      appearance: none;
+    }
+
+    .form-textarea {
+      height: auto;
+      min-height: 140px;
+      padding: 14px 16px;
+      line-height: 1.6;
+      resize: vertical;
+    }
+
+    .char-counter {
+      margin: 6px 0 0;
+      max-width: none;
+      text-align: right;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+    }
+
+    .char-counter.is-limit {
+      color: var(--color-terracotta);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: #A08C7A;
+    }
+
+    .form-input:hover,
+    .form-select:hover,
+    .form-textarea:hover {
+      border-color: var(--color-clay);
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      background: var(--color-white);
+      border-color: var(--color-soil-warm);
+      box-shadow: 0 0 0 4px rgba(122, 63, 26, 0.16);
+    }
+
+    .form-input[aria-invalid="true"],
+    .form-select[aria-invalid="true"],
+    .form-textarea[aria-invalid="true"] {
+      border-color: var(--color-terracotta);
+      background: var(--color-terracotta-tint);
+    }
+
+    .form-select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237A3F1A' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 44px;
+    }
+
+    .field-error {
+      display: none;
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-terracotta);
+    }
+
+    .field-error.visible {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .radio-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      grid-auto-rows: 1fr;
+      gap: 10px;
+    }
+
+    .radio-card {
+      position: relative;
+      display: flex;
+      min-width: 0;
+    }
+
+    .radio-card input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      margin: 0;
+      z-index: 2;
+    }
+
+    .radio-card-label {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      height: 100%;
+      min-height: 124px;
+      box-sizing: border-box;
+      padding: 16px 10px;
+      border: 2px solid var(--color-sand);
+      border-radius: 14px;
+      background: var(--color-parchment);
+      cursor: pointer;
+      font-size: 14px;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--color-text-body);
+      text-align: center;
+      transition: all 0.18s;
+    }
+
+    .radio-card-label svg {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      padding: 8px;
+      border-radius: 10px;
+      background: var(--color-white);
+      color: var(--color-clay);
+      transition: all 0.18s;
+    }
+
+    .radio-card:hover .radio-card-label {
+      border-color: var(--color-clay);
+      background: var(--color-cream);
+      transform: translateY(-2px);
+    }
+
+    .radio-card input:checked+.radio-card-label {
+      border-color: var(--color-soil-warm);
+      background: var(--color-amber-tint);
+      color: var(--color-soil-warm);
+      box-shadow: 0 6px 16px rgba(122, 63, 26, 0.16);
+    }
+
+    .radio-card input:checked+.radio-card-label svg {
+      background: var(--color-soil-warm);
+      color: var(--color-cream);
+    }
+
+    .radio-card input:checked+.radio-card-label::after {
+      content: '\2713';
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--color-soil-warm);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 20px;
+      text-align: center;
+    }
+
+    .radio-card:focus-within .radio-card-label {
+      outline: 3px solid var(--color-amber);
+      outline-offset: 2px;
+    }
+
+    .upload-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding: 16px;
+      border: 2px dashed var(--color-clay);
+      border-radius: 14px;
+      background: var(--color-parchment);
+      transition: background 0.18s, border-color 0.18s;
+    }
+
+    .upload-row:hover {
+      background: var(--color-cream);
+      border-color: var(--color-soil-warm);
+    }
+
+    .photo-upload-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 10px;
+      background: var(--color-soil-warm);
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-cream);
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+
+    .photo-upload-label:hover {
+      background: var(--color-soil);
+    }
+
+    #field-photo:focus-visible+.photo-upload-label,
+    .photo-upload-label:focus-visible {
+      outline: 3px solid var(--color-amber);
+      outline-offset: 2px;
+    }
+
+    #photo-name {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      word-break: break-word;
+    }
+
+    .consent-box {
+      padding: 16px 18px;
+      border: 2px solid var(--color-sand);
+      border-radius: 14px;
+      background: var(--color-parchment);
+    }
+
+    .consent-row {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-12);
+    }
+
+    .consent-check {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      accent-color: var(--color-soil-warm);
+      cursor: pointer;
+    }
+
+    .consent-row label {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--color-text-body);
+      cursor: pointer;
+    }
+
+    .report-submit {
+      width: 100%;
+      justify-content: center;
+      min-height: 56px;
+      font-size: 17px;
+      margin-top: var(--sp-8);
+    }
+
+    .form-success {
+      display: none;
+      background: var(--color-green-tint);
+      border: 2px solid var(--color-earth-green);
+      border-radius: 18px;
+      padding: var(--sp-48) var(--sp-24);
+      text-align: center;
+    }
+
+    .form-success.visible {
+      display: block;
+    }
+
+    .form-success h3 {
+      color: var(--color-green-dark);
+      margin-bottom: var(--sp-8);
+    }
+
+    .form-success p {
+      color: var(--color-text-body);
+      font-size: 17px;
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .site-footer .footer-col--credits,
+    .site-footer .footer-col--credits .footer-heading,
+    .site-footer .footer-col--credits .footer-credits,
+    .site-footer .footer-col--credits .footer-credits dt,
+    .site-footer .footer-col--credits .footer-credits dd {
+      text-align: center !important;
+    }
+
+    .site-footer .footer-col--credits .credit-name {
+      display: block;
+      margin: 0 0 4px;
+    }
+
+    .site-footer .footer-col--credits .credit-name:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 767px) {
+      .quiz-question-card {
+        padding: 32px var(--sp-16) var(--sp-20);
+      }
+
+      #quiz-question-text {
+        font-size: 18px;
+      }
+
+      .quiz-option-btn {
+        font-size: 15px;
+        padding: 12px 14px;
+      }
+
+      .radio-cards {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .report-card-head {
+        padding: 26px 20px 16px;
+      }
+
+      .report-card-body {
+        padding: 22px 20px 24px;
+      }
+
+      .form-step {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <nav class="site-nav-rail" aria-label="Main navigation">
+    <a href="index.html" class="nav-rail-brand" aria-label="Hagonoy Land Watch (Home)">
+  <img class="nav-rail-brand-icon" src="assets/icon.png" alt="" width="40" height="40">
+      <span class="nav-rail-brand-text">Hagonoy<br>Land Watch</span>
+    </a>
+    <div class="nav-rail-geo" aria-hidden="true">
+      <svg viewBox="0 0 56 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 9 Q14 3 28 7 Q42 11 54 5" stroke="#E9A344" stroke-width="0.7" opacity="0.5" fill="none" />
+        <path d="M2 6 Q14 1 28 4 Q42 7 54 2" stroke="#E9A344" stroke-width="0.5" opacity="0.3" fill="none" />
+      </svg>
+    </div>
+    <div class="nav-rail-items">
+      <a href="index.html" class="nav-rail-item" aria-label="Home">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        <span class="nav-rail-label">Home</span>
+      </a>
+      <a href="about.html" class="nav-rail-item" aria-label="About Land Subsidence">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <polyline points="10 9 9 9 8 9" />
+        </svg>
+        <span class="nav-rail-label">About</span>
+      </a>
+      <a href="causes-effects.html" class="nav-rail-item" aria-label="Causes and Effects">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+        </svg>
+        <span class="nav-rail-label">Causes</span>
+      </a>
+      <div class="nav-rail-divider" aria-hidden="true"></div>
+      <a href="community-impact.html" class="nav-rail-item" aria-label="Community Impact">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        <span class="nav-rail-label">Impact</span>
+      </a>
+      <a href="solutions.html" class="nav-rail-item" aria-label="Solutions">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+        </svg>
+        <span class="nav-rail-label">Solutions</span>
+      </a>
+      <div class="nav-rail-divider" aria-hidden="true"></div>
+      <a href="interactive.html" class="nav-rail-item" aria-current="page" aria-label="Interactive Map and Quiz">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+          <line x1="8" y1="2" x2="8" y2="18" />
+          <line x1="16" y1="6" x2="16" y2="22" />
+        </svg>
+        <span class="nav-rail-label">Map</span>
+      </a>
+      <a href="references.html" class="nav-rail-item" aria-label="References and Sources">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>
+        <span class="nav-rail-label">Sources</span>
+      </a>
+    </div>
+    <div class="nav-rail-footer">
+      <span class="nav-rail-footer-text">HLW &copy; 2026</span>
+    </div>
+  </nav>
+
+  <header class="site-topbar" role="banner">
+    <div class="topbar-inner">
+      <a href="index.html" class="topbar-site-name" aria-label="Hagonoy Land Watch (Home)">
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+          <rect x="4" y="22" width="24" height="4" rx="2" fill="#7A3F1A" />
+          <rect x="4" y="17" width="24" height="4" rx="2" fill="#9E5528" />
+          <rect x="4" y="12" width="24" height="4" rx="2" fill="#C17B30" />
+          <path d="M8 12 Q16 4 24 12" stroke="#E9A344" stroke-width="1.5" fill="none" stroke-linecap="round" />
+        </svg>
+        Hagonoy Land Watch
+      </a>
+      <button class="nav-menu-btn" id="nav-menu-btn" aria-expanded="false" aria-controls="nav-drawer"
+        aria-label="Open navigation menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+        Menu
+      </button>
+    </div>
+  </header>
+
+  <div class="nav-drawer-overlay" id="nav-drawer-overlay" aria-hidden="true"></div>
+
+  <nav class="nav-drawer" id="nav-drawer" aria-label="Main navigation" aria-hidden="true">
+    <div class="nav-drawer-header">
+      <a href="index.html" class="nav-drawer-brand" aria-label="Hagonoy Land Watch (Home)">
+        <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect x="4" y="22" width="24" height="4" rx="2" fill="#7A3F1A" />
+          <rect x="4" y="17" width="24" height="4" rx="2" fill="#9E5528" />
+          <rect x="4" y="12" width="24" height="4" rx="2" fill="#C17B30" />
+          <path d="M8 12 Q16 4 24 12" stroke="#E9A344" stroke-width="1.5" fill="none" />
+        </svg>
+        Hagonoy Land Watch
+      </a>
+      <button class="nav-drawer-close" id="nav-drawer-close" aria-label="Close navigation menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <div class="nav-drawer-items">
+      <a href="index.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        Home
+      </a>
+      <a href="about.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+        </svg>
+        About
+      </a>
+      <a href="causes-effects.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+        </svg>
+        Causes
+      </a>
+      <a href="community-impact.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        Impact
+      </a>
+      <a href="solutions.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+        </svg>
+        Solutions
+      </a>
+      <a href="interactive.html" class="nav-drawer-item" aria-current="page">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+          <line x1="8" y1="2" x2="8" y2="18" />
+          <line x1="16" y1="6" x2="16" y2="22" />
+        </svg>
+        Map &amp; Quiz
+      </a>
+      <a href="references.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>
+        Sources
+      </a>
+    </div>
+    <div class="nav-drawer-footer">Hagonoy Land Watch &mdash; School Project</div>
+  </nav>
+
+  <nav class="sub-nav" aria-label="Interactive section navigation">
+    <div class="sub-nav-inner">
+      <a href="#vulnerability-map">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+        </svg>
+        Map
+      </a>
+      <a href="#quiz">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        Quiz
+      </a>
+      <a href="#faq">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        </svg>
+        FAQ
+      </a>
+      <a href="#report">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+        </svg>
+        Report
+      </a>
+    </div>
+  </nav>
+
+  <main id="main-content" style="padding-top: 52px;">
+
+    <section class="section bg-parchment interactive-section fade-in" id="vulnerability-map"
+      aria-labelledby="map-heading">
+      <div class="container">
+        <div class="section-header section-header--left">
+          <p class="eyebrow">Section 1</p>
+          <h2 id="map-heading">Barangay Vulnerability Map</h2>
+          <div class="amber-bar" aria-hidden="true"></div>
+          <p class="section-intro">This map shows the 26 barangays of Hagonoy shaded by flood exposure level, based on
+            published news reports. Click any barangay or marker to learn more about it.</p>
+        </div>
+
+        <div class="callout callout--amber" role="note">
+          <div class="callout-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+          </div>
+          <div class="callout-body">
+            <p><strong>About this map:</strong> Risk levels are based on flood reports from the Manila Bulletin (July
+              2023), the Philippine News Agency (2018), and recent news coverage of Hagonoy. They show flood exposure,
+              not measured land subsidence, and are not official government assessments. For official hazard data, see
+              the DENR-MGB geohazard maps and the Hagonoy MDRRMO.</p>
+          </div>
+        </div>
+
+        <div class="map-section-layout">
+          <div>
+            <div class="map-container">
+              <div class="map-toolbar">
+                <div class="map-filter-group">
+                  <span class="map-toolbar-label" id="map-filters-label">Show</span>
+                  <div class="map-filters" role="group" aria-labelledby="map-filters-label" id="map-filters">
+                    <button class="filter-pill active" data-risk="All" aria-pressed="true">All</button>
+                    <button class="filter-pill" data-risk="High" aria-pressed="false"><span
+                        aria-hidden="true"></span>High</button>
+                    <button class="filter-pill" data-risk="Moderate" aria-pressed="false"><span
+                        aria-hidden="true"></span>Moderate</button>
+                    <button class="filter-pill" data-risk="Low" aria-pressed="false"><span
+                        aria-hidden="true"></span>Low</button>
+                    <button class="filter-pill" data-risk="Not yet assessed" aria-pressed="false"><span
+                        aria-hidden="true"></span>Not yet assessed</button>
+                  </div>
+                </div>
+                <button class="show-list-btn" id="show-list-btn" aria-expanded="false"
+                  aria-controls="barangay-list-view">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="8" y1="6" x2="21" y2="6" />
+                    <line x1="8" y1="12" x2="21" y2="12" />
+                    <line x1="8" y1="18" x2="21" y2="18" />
+                    <line x1="3" y1="6" x2="3.01" y2="6" />
+                    <line x1="3" y1="12" x2="3.01" y2="12" />
+                    <line x1="3" y1="18" x2="3.01" y2="18" />
+                  </svg>
+                  <span class="show-list-text">Show as list</span>
+                </button>
+              </div>
+
+              <div id="barangay-list-view" class="barangay-list-view"
+                aria-label="List of all barangays with risk levels">
+                <noscript>
+                  <p style="padding:16px; font-size:14px; color:#7A5C42;">Enable JavaScript to see the barangay list.
+                  </p>
+                </noscript>
+              </div>
+
+              <div id="map-svg-wrapper" class="hlw-map" role="region"
+                aria-label="Interactive map of Hagonoy barangays. Use the list view above for a text alternative.">
+                <noscript>
+                  <p style="padding:24px; color:#3D2010; font-size:15px;">
+                    JavaScript is required to display the interactive map.
+                    Enable JavaScript to use the map and the barangay list.
+                  </p>
+                </noscript>
+              </div>
+
+              <p class="map-caption">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <span>Barangay boundaries from PSA/PSGC data (simplified). Marker positions are approximate. Risk levels
+                  reflect flood exposure from news reports, not official assessments.</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="map-right-panel">
+            <div class="map-legend" id="map-legend" aria-label="Map legend">
+              <h3>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  aria-hidden="true" style="vertical-align:-3px; margin-right:6px;">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                  <path d="M2 17l10 5 10-5" />
+                  <path d="M2 12l10 5 10-5" />
+                </svg>
+                Risk Legend
+              </h3>
+              <ul class="legend-list">
+                <li class="legend-item">
+                  <span class="legend-marker" aria-hidden="true"></span>
+                  <span class="legend-text"><strong>High</strong><small>triangle marker</small></span>
+                </li>
+                <li class="legend-item">
+                  <span class="legend-marker" aria-hidden="true"></span>
+                  <span class="legend-text"><strong>Moderate</strong><small>diamond marker</small></span>
+                </li>
+                <li class="legend-item">
+                  <span class="legend-marker" aria-hidden="true"></span>
+                  <span class="legend-text"><strong>Low</strong><small>circle marker</small></span>
+                </li>
+                <li class="legend-item">
+                  <span class="legend-marker" aria-hidden="true"></span>
+                  <span class="legend-text"><strong>Not yet assessed</strong><small>square marker</small></span>
+                </li>
+              </ul>
+              <p class="legend-note">Each marker is also labeled in its popup. Color is never the only indicator.</p>
+            </div>
+
+            <div class="map-details-panel" id="map-details-panel" aria-live="polite" aria-atomic="true"
+              aria-label="Barangay details">
+              <div class="details-placeholder">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                  aria-hidden="true">
+                  <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+                  <line x1="8" y1="2" x2="8" y2="18" />
+                  <line x1="16" y1="6" x2="16" y2="22" />
+                </svg>
+                <p>Click a barangay or marker on the map to see details about it.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <span class="soil-divider" aria-hidden="true"></span>
+
+    <section class="section bg-cream interactive-section fade-in" id="quiz" aria-labelledby="quiz-heading">
+      <div class="container">
+        <div class="section-header section-header--left">
+          <p class="eyebrow">Section 2</p>
+          <h2 id="quiz-heading">Test Your Knowledge</h2>
+          <div class="amber-bar" aria-hidden="true"></div>
+          <p class="section-intro">Answer 10 questions about land subsidence and its effects on Hagonoy. You will get
+            instant feedback after each answer.</p>
+        </div>
+
+        <div class="quiz-meta">
+          <span class="quiz-chip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            10 questions
+          </span>
+          <span class="quiz-chip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Instant feedback
+          </span>
+          <span class="quiz-chip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            Estimated 3 to 5 minutes
+          </span>
+        </div>
+
+        <div id="quiz-feedback-live" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
+
+        <div class="quiz-wrapper" id="quiz-container">
+          <p class="quiz-progress-label" id="quiz-progress-label">Question 1 of 10</p>
+          <div class="quiz-progress-bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="10"
+            aria-labelledby="quiz-progress-label">
+            <div id="quiz-progress-fill"></div>
+          </div>
+
+          <div class="quiz-question-card" id="quiz-question-card">
+            <p id="quiz-question-text">Loading question…</p>
+            <div id="quiz-options" role="group" aria-labelledby="quiz-question-text"></div>
+            <div class="quiz-feedback" id="quiz-feedback" role="status" aria-live="polite"></div>
+            <button class="btn btn--primary" id="quiz-next-btn" style="display:none;">
+              Next Question
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="quiz-score-card" id="quiz-score-card" aria-labelledby="quiz-score-number quiz-score-message">
+            <div class="score-medal" aria-hidden="true">
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="6" />
+                <path d="M15.5 13.5L17 22l-5-3-5 3 1.5-8.5" />
+              </svg>
+            </div>
+            <p class="score-label">Your Score</p>
+            <p id="quiz-score-number">0 / 10</p>
+            <p id="quiz-score-message">See how well you understand land subsidence in Hagonoy.</p>
+            <button class="btn btn--cta" id="quiz-retake-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                aria-hidden="true">
+                <polyline points="1 4 1 10 7 10" />
+                <path d="M3.51 15a9 9 0 1 0 .49-3.55" />
+              </svg>
+              Retake Quiz
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <span class="soil-divider" aria-hidden="true"></span>
+
+    <section class="section bg-parchment interactive-section fade-in" id="faq" aria-labelledby="faq-heading">
+      <div class="container">
+        <div class="section-header section-header--left">
+          <p class="eyebrow">Section 3</p>
+          <h2 id="faq-heading">Frequently Asked Questions</h2>
+          <div class="amber-bar" aria-hidden="true"></div>
+          <p class="section-intro">Clear answers to common questions about land subsidence, its effects on Hagonoy, and
+            what you can do. Select a question to open its answer.</p>
+        </div>
+
+        <div class="faq-layout">
+          <aside class="faq-aside" aria-label="FAQ topics">
+            <nav class="faq-toc" aria-label="FAQ categories">
+              <h3>Jump to a topic</h3>
+              <a href="#faq-basics">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                </svg>
+                The basics
+              </a>
+              <a href="#faq-hagonoy">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                Hagonoy and your home
+              </a>
+              <a href="#faq-action">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
+                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+                </svg>
+                Taking action
+              </a>
+              <a href="#faq-site">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="16" x2="12" y2="12" />
+                  <line x1="12" y1="8" x2="12.01" y2="8" />
+                </svg>
+                About this website
+              </a>
+            </nav>
+          </aside>
+
+          <div class="faq-list" id="faq-list">
+
+            <div class="faq-group" id="faq-basics">
+              <div class="faq-group-head">
+                <span class="faq-group-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                  </svg>
+                </span>
+                <h3>The basics</h3>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-1" id="faq-q-1">
+                  What is land subsidence?
+                  <span class="faq-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer" id="faq-ans-1" role="region" aria-labelledby="faq-q-1">
+                  <p>Land subsidence is the gradual sinking of the ground surface, or its sudden collapse, caused by the
+                    movement of earth materials below it <a class="faq-cite"
+                      href="references.html#ref-usgs-subsidence">(U.S. Geological Survey, n.d.-c)</a>. It
+                    can happen slowly over years or, in some cases, abruptly, and the rate depends on the cause <a
+                      class="faq-cite" href="references.html#ref-galloway-1999">(Galloway et al., 1999)</a>.</p>
+                  <p>In Hagonoy, the main cause is the pumping of too much groundwater from underground aquifers. When
+                    water is removed from the spaces between soil particles, those particles compact and the ground
+                    above sinks <a class="faq-cite" href="references.html#ref-galloway-burbey-2011">(Galloway &amp;
+                      Burbey, 2011)</a>.</p>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-2" id="faq-q-2">
+                  Is land subsidence the same as an earthquake?
+                  <span class="faq-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer" id="faq-ans-2" role="region" aria-labelledby="faq-q-2">
+                  <p>No. An earthquake is the shaking of the ground caused by a sudden release of energy, most often
+                    from movement along faults in the Earth's crust <a class="faq-cite"
+                      href="references.html#ref-usgs-earthquake">(U.S. Geological Survey, n.d.-d)</a>. Land
+                    subsidence is a different process: the ground surface sinks because of changes in the materials
+                    below it, and it is often gradual enough that it is not felt <a class="faq-cite"
+                      href="references.html#ref-usgs-subsidence">(U.S. Geological Survey, n.d.-c)</a>. The damage from
+                    subsidence builds up over years or decades.</p>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-3" id="faq-q-3">
+                  What is the difference between subsidence and flooding?
+                  <span class="faq-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer" id="faq-ans-3" role="region" aria-labelledby="faq-q-3">
+                  <p><strong>Subsidence</strong> is the ground itself getting lower. <strong>Flooding</strong> is water
+                    covering land that is normally dry. They are different problems, but they make each other worse.</p>
+                  <p>When land sinks, the same high tide or heavy rain reaches farther, floods deeper and takes longer
+                    to drain. In low-lying coastal and delta areas, sinking land raises flood exposure even when sea
+                    level itself has not changed <a class="faq-cite"
+                      href="references.html#ref-syvitski-2009">(Syvitski et al., 2009)</a>, and coastal cities that
+                    are sinking face growing flood risk <a class="faq-cite"
+                      href="references.html#ref-erkens-2015">(Erkens et al., 2015)</a>.</p>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-4" id="faq-q-4">
+                  Can land subsidence be reversed?
+                  <span class="faq-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer" id="faq-ans-4" role="region" aria-labelledby="faq-q-4">
+                  <p><strong>Not completely.</strong> Much of the compaction caused by groundwater pumping is permanent,
+                    so the land rarely returns to its original level. However, the rate of sinking can be slowed or
+                    stopped by reducing groundwater extraction and allowing water levels in the aquifer to recover <a
+                      class="faq-cite" href="references.html#ref-galloway-burbey-2011">(Galloway &amp; Burbey,
+                      2011)</a>.</p>
+                  <p>In cities where groundwater pumping was restricted, such as Tokyo, Japan, subsidence slowed
+                    markedly after water levels recovered <a class="faq-cite"
+                      href="references.html#ref-galloway-burbey-2011">(Galloway &amp; Burbey, 2011)</a>. Prevention is
+                    always better than cure.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-group" id="faq-hagonoy">
+              <div class="faq-group-head">
+                <span class="faq-group-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg>
+                </span>
+                <h3>Hagonoy and your home</h3>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-5" id="faq-q-5">
+                  Why is Hagonoy especially affected?
+                  <span class="faq-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer" id="faq-ans-5" role="region" aria-labelledby="faq-q-5">
+                  <p>Hagonoy sits on soft, low-lying land in the delta of the Pampanga River. Several factors combine to
+                    make it especially vulnerable:</p>
+                  <ul>
+                    <li><strong>Soft alluvial soil</strong> (the land is made of loose river sediment that compacts
+                      easily)</li>
+                    <li><strong>High groundwater use</strong> (farming, fishponds, and households all depend on wells)
+                    </li>
+                    <li><strong>Low elevation</strong> (parts of Hagonoy are already near or below sea level)</li>
+                    <li><strong>Rising sea levels</strong> (climate change is raising nearby coastal water, worsening
+                      the risk of flooding)</li>
+                    <li><strong>Heavy seasonal rains</strong> (flood events are more damaging when land has sunk)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-6" id="faq-q-6">
+                  How fast is Hagonoy sinking?
+                  <span class="faq-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer" id="faq-ans-6" role="region" aria-labelledby="faq-q-6">
+                  <p>A 2026 study of Hagonoy and Calumpit measured ground movement with satellite radar (Sentinel-1
+                    InSAR) from 2015 to early 2021. It found sinking of up to <strong>124.51 mm per year</strong> (about
+                    12.5 cm a year) near areas with heavy groundwater pumping.</p>
+                  <p>Ground within 500 meters of pumping stations sank faster on average (about 70.22 mm per year) than
+                    ground farther away (about 65.31 mm per year), and the difference was statistically significant. The
+                    researchers also estimate that Hagonoy's groundwater extraction of about 9 million cubic meters a
+                    year may account for around 81 mm per year of sinking.</p>
+                  <p>The study calls for local monitoring and for including subsidence risk in land-use planning. This
+                    website does not measure sinking itself, and these figures are not ratings for individual barangays.
+                    Source: Maclang et al. (2026).</p>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-7" id="faq-q-7">
+                  Which barangays are most at risk?
+                  <span class="faq-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer" id="faq-ans-7" role="region" aria-labelledby="faq-q-7">
+                  <p>On the map above, the barangays rated <strong>High</strong> for flood exposure are Mercado, Pugad,
+                    Sagrada Familia, San Miguel, San Nicolas, San Sebastian, Santa Elena, Santa Monica, Santo Niño,
+                    Santo Rosario, Tampok and Tibaguin.</p>
+                  <p>Please remember that these ratings come from news reports, and that floods have recently reached
+                    every barangay in Hagonoy. A lower rating does not mean an area is safe.</p>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-8" id="faq-q-8">
+                  How do I know if my home is affected?
+                  <span class="faq-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer" id="faq-ans-8" role="region" aria-labelledby="faq-q-8">
+                  <p>Warning signs that your home or area may be experiencing land subsidence include:</p>
+                  <ul>
+                    <li>Cracks appearing in walls, floors, or ceilings that were not there before</li>
+                    <li>Doors and windows that used to close properly now stick or leave gaps</li>
+                    <li>Floors that feel uneven or tilted</li>
+                    <li>Water pooling in areas that did not flood before</li>
+                    <li>Roads or pavements cracking or dipping unevenly</li>
+                  </ul>
+                  <p>If you notice these signs, document them with photos and report them to your barangay captain. Use
+                    the Report form in Section 4 below.</p>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-9" id="faq-q-9">
+                  How does subsidence affect fishponds and farming?
+                  <span class="faq-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer" id="faq-ans-9" role="region" aria-labelledby="faq-q-9">
+                  <p>Many families in Hagonoy depend on fishponds and rice farming for their income. Land subsidence
+                    affects these livelihoods in several ways:</p>
+                  <ul>
+                    <li>Sinking land makes fishpond dikes harder to maintain (saltwater and floodwater breach them more
+                      easily)</li>
+                    <li>Rice paddies that sink below drainage level become permanently waterlogged and unproductive</li>
+                    <li>Saltwater intrusion into freshwater sources reduces water quality for aquaculture</li>
+                    <li>Irrigation infrastructure (canals and gates) becomes misaligned as land sinks unevenly</li>
+                  </ul>
+                  <p>These losses force families to seek other income, which often increases migration away from the
+                    area.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-group" id="faq-action">
+              <div class="faq-group-head">
+                <span class="faq-group-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
+                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+                  </svg>
+                </span>
+                <h3>Taking action</h3>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-10" id="faq-q-10">
+                  What can I personally do to help?
+                  <span class="faq-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer" id="faq-ans-10" role="region" aria-labelledby="faq-q-10">
+                  <p>Every household action adds up. Start with these steps:</p>
+                  <ul>
+                    <li>Fix leaking pipes (wasted water means more pumping needed)</li>
+                    <li>Collect rainwater for non-drinking uses like gardening and washing</li>
+                    <li>Reduce paving around your home so rainwater can soak into the ground</li>
+                    <li>Plant trees and shrubs whose roots help water infiltrate the soil</li>
+                    <li>Report signs of subsidence to barangay officials</li>
+                  </ul>
+                  <p>See the full checklist on the <a href="solutions.html#today-checklist">Solutions page</a>.</p>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-11" id="faq-q-11">
+                  What should I do in an emergency related to flooding or sinking?
+                  <span class="faq-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer" id="faq-ans-11" role="region" aria-labelledby="faq-q-11">
+                  <p>If you are in immediate danger, <strong>call 911</strong> or contact your local disaster risk
+                    reduction and management office (DRRMO).</p>
+                  <ul>
+                    <li>Evacuate to higher ground if flooding is rising quickly</li>
+                    <li>Stay away from cracked or sinking structures (they may be unstable)</li>
+                    <li>Do not use flooded roads if you cannot see the bottom</li>
+                    <li>Contact your barangay emergency team</li>
+                  </ul>
+                  <p>The Report form below is for non-emergency documentation only, not for emergencies.</p>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-12" id="faq-q-12">
+                  Who monitors land subsidence in the Philippines?
+                  <span class="faq-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer" id="faq-ans-12" role="region" aria-labelledby="faq-q-12">
+                  <p>Several government agencies share this responsibility:</p>
+                  <ul>
+                    <li><strong>Mines and Geosciences Bureau (MGB)</strong> (conducts geohazard assessments and surveys)
+                    </li>
+                    <li><strong>PHIVOLCS</strong> (monitors geological and volcanic hazards across the country)</li>
+                    <li><strong>NAMRIA</strong> (produces official maps and topographic data)</li>
+                    <li><strong>PAGASA</strong> (tracks climate and sea level changes that affect subsidence risk)</li>
+                    <li><strong>NWRB</strong> (regulates groundwater extraction through well permits)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-group" id="faq-site">
+              <div class="faq-group-head">
+                <span class="faq-group-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                  </svg>
+                </span>
+                <h3>About this website</h3>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-13" id="faq-q-13">
+                  How were the risk levels on the map decided?
+                  <span class="faq-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer" id="faq-ans-13" role="region" aria-labelledby="faq-q-13">
+                  <p>The levels are based on published news reports about which barangays were flooded:</p>
+                  <ul>
+                    <li><strong>High:</strong> named among the villages flooded by a high tide of about 4.86 feet in
+                      July 2023, or with documented long-term flooding</li>
+                    <li><strong>Moderate:</strong> named in the 2018 floods but not in the deeper 2023 event</li>
+                    <li><strong>Low:</strong> not named in either report</li>
+                  </ul>
+                  <p>Each barangay's popup explains its own rating and sources. See the Sources page for the full list
+                    of references.</p>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-14" id="faq-q-14">
+                  Is the risk data on this map official?
+                  <span class="faq-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer" id="faq-ans-14" role="region" aria-labelledby="faq-q-14">
+                  <p><strong>No.</strong> The risk levels show flood exposure based on news reports, not measured land
+                    subsidence, and they are not an official government assessment.</p>
+                  <p>For official hazard information about your barangay, contact the Mines and Geosciences Bureau (MGB)
+                    or your local DRRM office.</p>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false" aria-controls="faq-ans-15" id="faq-q-15">
+                  Is this website an official government resource?
+                  <span class="faq-icon" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer" id="faq-ans-15" role="region" aria-labelledby="faq-q-15">
+                  <p><strong>No.</strong> Hagonoy Land Watch is a school project created for educational purposes. All
+                    information is sourced from published government and scientific documents, but this site is not
+                    affiliated with any government agency.</p>
+                  <p>For official information, visit the websites of MGB, PHIVOLCS, PAGASA, or your local government
+                    unit.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <span class="soil-divider" aria-hidden="true"></span>
+
+    <section class="section bg-cream interactive-section fade-in" id="report" aria-labelledby="report-heading">
+      <div class="container">
+        <div class="section-header section-header--left">
+          <p class="eyebrow">Section 4</p>
+          <h2 id="report-heading">Report a Problem</h2>
+          <div class="amber-bar" aria-hidden="true"></div>
+          <p class="section-intro">Have you noticed cracks, sinking ground, or unusual flooding in your area? Submit a
+            report below so it can be documented and shared with the community.</p>
+        </div>
+
+        <div class="report-layout" id="report-form-section">
+
+          <aside class="report-aside" aria-label="Before you report">
+            <div class="emergency-notice" role="alert">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+              <div>
+                <strong>Emergency?</strong> This form is for documentation only. If you or someone else is in immediate
+                danger, <strong>call 911</strong> or contact your barangay disaster team immediately.
+              </div>
+            </div>
+
+            <div class="report-tips">
+              <h3>For a useful report</h3>
+              <ul>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span><strong>Be specific.</strong> Say where the problem is, such as which wall, street or
+                    fishpond.</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span><strong>Say when.</strong> Note when you first noticed it and whether it is getting
+                    worse.</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span><strong>Add a photo.</strong> A clear picture with something for scale helps a lot.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="report-note">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12.01" y2="8" />
+              </svg>
+              <p>This is a school project. This form is a mock-up only and will not be saved. Reports are not sent to
+                any government agency. For official concerns, contact your barangay captain or the MGB.</p>
+            </div>
+          </aside>
+
+          <div class="report-card">
+            <div class="report-card-head">
+              <span class="report-card-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="12" y1="18" x2="12" y2="12" />
+                  <line x1="9" y1="15" x2="15" y2="15" />
+                </svg>
+              </span>
+              <div>
+                <h3>Submit a report</h3>
+                <p>It takes about two minutes.</p>
+              </div>
+            </div>
+
+            <div class="report-card-body">
+
+              <div id="form-error-summary" class="error-summary" role="alert" aria-labelledby="error-summary-title">
+                <h3 id="error-summary-title">Please fix these errors before submitting:</h3>
+                <ul id="error-summary-list"></ul>
+              </div>
+
+              <div id="form-wrapper">
+                <form id="report-mockup-form" novalidate aria-describedby="form-note">
+                  <p id="form-note" class="form-note-line">Fields marked with <span aria-hidden="true"
+                      style="color:var(--color-terracotta); font-weight:700;">*</span> <span
+                      class="sr-only">(required)</span> must be filled in.</p>
+
+                  <div class="form-step">
+                    <span class="form-step-num" aria-hidden="true">1</span>
+                    <div class="form-step-content">
+                      <div class="form-field">
+                        <label class="form-label" for="field-barangay">
+                          Barangay <span class="required-mark" aria-hidden="true">*</span>
+                        </label>
+                        <p class="form-hint">Where did you notice the problem?</p>
+                        <select class="form-select" id="field-barangay" required aria-required="true"
+                          aria-describedby="err-barangay">
+                          <option value="">Select your barangay</option>
+                          <option>Abulalas</option>
+                          <option>Carillo</option>
+                          <option>Iba</option>
+                          <option>Iba-Ibayo</option>
+                          <option>Mercado</option>
+                          <option>Palapat</option>
+                          <option>Pugad</option>
+                          <option>Sagrada Familia</option>
+                          <option>San Agustin</option>
+                          <option>San Isidro</option>
+                          <option>San Jose</option>
+                          <option>San Juan</option>
+                          <option>San Miguel</option>
+                          <option>San Nicolas</option>
+                          <option>San Pablo</option>
+                          <option>San Pascual</option>
+                          <option>San Pedro</option>
+                          <option>San Roque</option>
+                          <option>San Sebastian</option>
+                          <option>Santa Cruz</option>
+                          <option>Santa Elena</option>
+                          <option>Santa Monica</option>
+                          <option>Santo Niño (Poblacion)</option>
+                          <option>Santo Rosario</option>
+                          <option>Tampok</option>
+                          <option>Tibaguin</option>
+                        </select>
+                        <span class="field-error" id="err-barangay" role="alert">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                          </svg>
+                          Please select your barangay.
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-step">
+                    <span class="form-step-num" aria-hidden="true">2</span>
+                    <div class="form-step-content">
+                      <div class="form-field">
+                        <fieldset>
+                          <legend class="form-label">
+                            Type of problem <span class="required-mark" aria-hidden="true">*</span>
+                          </legend>
+                          <p class="form-hint">Choose the issue that best describes what you observed. Click a
+                            selected choice again to unselect it.</p>
+                          <div class="radio-cards" id="radio-cards-issue" aria-describedby="err-issue-type">
+                            <div class="radio-card">
+                              <input type="radio" name="issue-type" id="issue-cracks" value="cracks">
+                              <label class="radio-card-label" for="issue-cracks">
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                                </svg>
+                                Wall / Floor Cracks
+                              </label>
+                            </div>
+                            <div class="radio-card">
+                              <input type="radio" name="issue-type" id="issue-flooding" value="flooding">
+                              <label class="radio-card-label" for="issue-flooding">
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                  <path
+                                    d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" />
+                                </svg>
+                                Unusual Flooding
+                              </label>
+                            </div>
+                            <div class="radio-card">
+                              <input type="radio" name="issue-type" id="issue-sinking" value="sinking">
+                              <label class="radio-card-label" for="issue-sinking">
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                  <line x1="12" y1="5" x2="12" y2="19" />
+                                  <polyline points="19 12 12 19 5 12" />
+                                </svg>
+                                Sinking Ground
+                              </label>
+                            </div>
+                            <div class="radio-card">
+                              <input type="radio" name="issue-type" id="issue-well" value="well">
+                              <label class="radio-card-label" for="issue-well">
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                  <circle cx="12" cy="12" r="10" />
+                                  <line x1="2" y1="12" x2="22" y2="12" />
+                                  <path
+                                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                                </svg>
+                                Well / Water Issue
+                              </label>
+                            </div>
+                            <div class="radio-card">
+                              <input type="radio" name="issue-type" id="issue-other" value="other">
+                              <label class="radio-card-label" for="issue-other">
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                  <circle cx="12" cy="12" r="1" />
+                                  <circle cx="19" cy="12" r="1" />
+                                  <circle cx="5" cy="12" r="1" />
+                                </svg>
+                                Other
+                              </label>
+                            </div>
+                          </div>
+                          <span class="field-error" id="err-issue-type" role="alert">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                              stroke-width="2" aria-hidden="true">
+                              <circle cx="12" cy="12" r="10" />
+                              <line x1="12" y1="8" x2="12" y2="12" />
+                              <line x1="12" y1="16" x2="12.01" y2="16" />
+                            </svg>
+                            Please select a type of problem.
+                          </span>
+                        </fieldset>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-step">
+                    <span class="form-step-num" aria-hidden="true">3</span>
+                    <div class="form-step-content">
+                      <div class="form-field">
+                        <label class="form-label" for="field-description">
+                          Description <span class="required-mark" aria-hidden="true">*</span>
+                        </label>
+                        <p class="form-hint">Describe what you observed. Where exactly? When did you first notice it?
+                          How serious does it seem? Write more than 20 words (up to 500 characters).</p>
+                        <textarea class="form-textarea" id="field-description" required aria-required="true"
+                          aria-describedby="err-description description-counter" maxlength="500"
+                          placeholder="E.g., Large crack appeared on the east wall of my home around October. The floor in the kitchen is noticeably tilted."
+                          rows="5"></textarea>
+                        <p class="char-counter" id="description-counter" aria-live="polite">0 words (more than 20
+                          needed) · 0 / 500 characters</p>
+                        <span class="field-error" id="err-description" role="alert">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                          </svg>
+                          Please describe the problem in more than 20 words (up to 500 characters).
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-step">
+                    <span class="form-step-num" aria-hidden="true">4</span>
+                    <div class="form-step-content">
+                      <div class="form-field">
+                        <span class="form-label" id="photo-label">Photo (optional)</span>
+                        <p class="form-hint">Attach a photo if you have one. Accepted: JPG, PNG, or WEBP up to 5 MB.
+                        </p>
+                        <div class="upload-row">
+                          <input type="file" id="field-photo" class="sr-only" accept="image/jpeg,image/png,image/webp"
+                            aria-labelledby="photo-label" aria-describedby="photo-name">
+                          <label for="field-photo" class="photo-upload-label">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                              stroke-width="2" aria-hidden="true">
+                              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                              <circle cx="8.5" cy="8.5" r="1.5" />
+                              <polyline points="21 15 16 10 5 21" />
+                            </svg>
+                            Choose photo
+                          </label>
+                          <span id="photo-name" aria-live="polite">No file chosen</span>
+                        </div>
+                      </div>
+
+                      <div class="form-field">
+                        <label class="form-label" for="field-contact">Contact number or name (optional)</label>
+                        <p class="form-hint">Only needed if you want a follow-up. You may leave this blank.</p>
+                        <input type="text" class="form-input" id="field-contact" autocomplete="tel"
+                          placeholder="e.g., 09XX-XXX-XXXX or Juan dela Cruz">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-field">
+                    <div class="consent-box">
+                      <div class="consent-row">
+                        <input type="checkbox" class="consent-check" id="field-consent" required aria-required="true"
+                          aria-describedby="err-consent">
+                        <label for="field-consent">
+                          I understand that this form is for a school project. The information I submit may be used for
+                          educational purposes only. <span class="required-mark" aria-hidden="true">*</span>
+                        </label>
+                      </div>
+                    </div>
+                    <span class="field-error" id="err-consent" role="alert">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                      </svg>
+                      You must agree to the consent statement.
+                    </span>
+                  </div>
+
+                  <button type="submit" class="btn btn--primary report-submit">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2" aria-hidden="true">
+                      <line x1="22" y1="2" x2="11" y2="13" />
+                      <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                    </svg>
+                    Submit Report
+                  </button>
+                </form>
+              </div>
+
+              <div id="form-success" class="form-success" role="status">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-earth-green)"
+                  stroke-width="2" aria-hidden="true" style="margin-bottom:16px;">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <h3>Thank you for your report!</h3>
+                <p>Your observation has been recorded. Because this is a school project, reports are not sent to any
+                  government agency. For official concerns, please contact your barangay captain or the MGB.</p>
+                <button class="btn btn--outline" id="new-report-btn" style="margin-top:var(--sp-16);">Submit another
+                  report</button>
+              </div>
+
+              <div id="submitted-reports" class="submitted-reports" hidden>
+                <h3>Your submitted reports (<span id="submitted-reports-count">0</span>)</h3>
+                <ul id="submitted-reports-list" class="submitted-reports-list"></ul>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>About This Site</h3>
+          <p>Hagonoy Land Watch is a community awareness project about land subsidence (<span lang="fil" style="color:#ffffff;">paglubog ng
+              lupa</span>) in Hagonoy, Bulacan, Philippines.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="causes-effects.html">Causes &amp; Effects</a></li>
+            <li><a href="community-impact.html">Community Impact</a></li>
+            <li><a href="solutions.html">Solutions</a></li>
+            <li><a href="interactive.html">Interactive</a></li>
+            <li><a href="references.html">References</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-col--credits">
+          <h3 class="footer-heading">Project Credits</h3>
+          <dl class="footer-credits">
+            <dt>Student / Group</dt>
+            <dd class="verify">
+              <span class="credit-name">John Paul F. Carlos</span>
+              <span class="credit-name">Justine James V. Dela Cruz</span>
+              <span class="credit-name">Geron Adrian E. Jose</span>
+              <span class="credit-name">John Lenard C. Romeroso</span>
+              <span class="credit-name">Ishi B. Trillana</span>
+            </dd>
+            <dt>Course</dt>
+            <dd class="verify">MST 101A - ENVIRONMENTAL SCIENCE</dd>
+            <dt>School</dt>
+            <dd class="verify">Bulacan State University Hagonoy Campus</dd>
+            <dt>Submitted</dt>
+            <dd class="verify">November 8, 2026</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="footer-disclaimer" role="note">
+        <strong>Disclaimer:</strong> This is a school project. It is not an official government website. For
+        emergencies, call <strong>911</strong>.
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 Hagonoy Land Watch (School project)</p>
+        <a href="#main-content" class="back-to-top" aria-label="Back to top">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            aria-hidden="true" focusable="false">
+            <polyline points="18 15 12 9 6 15" />
+          </svg>
+          Back to top
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/map.js" defer></script>
+  <script src="js/quiz.js" defer></script>
+  <script src="js/faq.js" defer></script>
+  <script src="js/form.js" defer></script>
+  <script src="js/main.js" defer></script>
+
+  <script>
+    (function () {
+      var group = document.getElementById('radio-cards-issue');
+      if (!group) return;
+
+      function mark(e) {
+        var t = e.target;
+        if (t && t.type === 'radio') {
+          t.dataset.wasChecked = t.checked ? '1' : '';
+        }
+      }
+
+      group.addEventListener('pointerdown', mark);
+      group.addEventListener('keydown', function (e) {
+        if (e.key === ' ' || e.key === 'Enter') mark(e);
+      });
+      group.addEventListener('click', function (e) {
+        var t = e.target;
+        if (!t || t.type !== 'radio') return;
+        if (t.dataset.wasChecked === '1') {
+          t.checked = false;
+          t.dataset.wasChecked = '';
+          t.dispatchEvent(new Event('change', { bubbles: true }));
+        } else {
+          t.dataset.wasChecked = '';
+        }
+      });
+    })();
+
+    (function () {
+      var MIN_WORDS = 21;
+      var area = document.getElementById('field-description');
+      var out = document.getElementById('description-counter');
+      var form = document.getElementById('report-mockup-form');
+      var success = document.getElementById('form-success');
+      var err = document.getElementById('err-description');
+      if (!area || !out || !form) return;
+
+      var max = area.maxLength > 0 ? area.maxLength : 500;
+      var flagged = false;
+
+      function countWords() {
+        var t = area.value.trim();
+        return t ? t.split(/\s+/).length : 0;
+      }
+
+      function clearFlag() {
+        flagged = false;
+        if (err) err.classList.remove('visible');
+        area.removeAttribute('aria-invalid');
+      }
+
+      function update() {
+        var w = countWords();
+        var n = area.value.length;
+        out.textContent = w + (w === 1 ? ' word' : ' words') + ' (more than 20 needed) \u00B7 ' + n + ' / ' + max + ' characters';
+        out.classList.toggle('is-limit', n >= max);
+        if (flagged && w >= MIN_WORDS) clearFlag();
+      }
+
+      form.addEventListener('submit', function (event) {
+        if (countWords() >= MIN_WORDS) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        flagged = true;
+        if (err) err.classList.add('visible');
+        area.setAttribute('aria-invalid', 'true');
+        area.focus();
+      }, true);
+
+      area.addEventListener('input', update);
+      area.addEventListener('focus', update);
+      form.addEventListener('reset', function () { setTimeout(update, 0); });
+      if (success) {
+        new MutationObserver(update).observe(success, { attributes: true, attributeFilter: ['class'] });
+      }
+      update();
+    })();
+
+    (function () {
+      var KEY = 'hlwSubmittedReports';
+      var form = document.getElementById('report-mockup-form');
+      var success = document.getElementById('form-success');
+      var panel = document.getElementById('submitted-reports');
+      var list = document.getElementById('submitted-reports-list');
+      var count = document.getElementById('submitted-reports-count');
+      if (!form || !success || !panel || !list || !count) return;
+
+      var memory = [];
+      var snapshot = null;
+
+      function loadReports() {
+        try {
+          var raw = window.sessionStorage.getItem(KEY);
+          return raw ? JSON.parse(raw) : [];
+        } catch (e) {
+          return memory;
+        }
+      }
+
+      function saveReports(reports) {
+        memory = reports;
+        try {
+          window.sessionStorage.setItem(KEY, JSON.stringify(reports));
+        } catch (e) {
+          memory = reports;
+        }
+      }
+
+      function makeLine(className, text) {
+        var p = document.createElement('p');
+        p.className = className;
+        p.textContent = text;
+        return p;
+      }
+
+      function render() {
+        var reports = loadReports();
+        list.textContent = '';
+        count.textContent = String(reports.length);
+        panel.hidden = reports.length === 0;
+        for (var i = reports.length - 1; i >= 0; i--) {
+          var r = reports[i];
+          var li = document.createElement('li');
+          li.className = 'submitted-report-item';
+
+          var meta = document.createElement('div');
+          meta.className = 'submitted-report-meta';
+          var parts = [r.barangay, r.type, r.time];
+          for (var j = 0; j < parts.length; j++) {
+            var span = document.createElement('span');
+            span.textContent = parts[j];
+            meta.appendChild(span);
+          }
+          li.appendChild(meta);
+          li.appendChild(makeLine('submitted-report-desc', r.description));
+          if (r.photo) {
+            li.appendChild(makeLine('submitted-report-photo', 'Photo attached: ' + r.photo));
+          }
+          list.appendChild(li);
+        }
+      }
+
+      function readTypeLabel() {
+        var checked = form.querySelector('input[name="issue-type"]:checked');
+        if (!checked) return '';
+        var label = form.querySelector('label[for="' + checked.id + '"]');
+        return label ? label.textContent.replace(/\s+/g, ' ').trim() : checked.value;
+      }
+
+      form.addEventListener('submit', function () {
+        var barangay = document.getElementById('field-barangay');
+        var description = document.getElementById('field-description');
+        var photo = document.getElementById('field-photo');
+        snapshot = {
+          barangay: barangay ? barangay.value : '',
+          type: readTypeLabel(),
+          description: description ? description.value.trim() : '',
+          photo: photo && photo.files && photo.files[0] ? photo.files[0].name : '',
+          time: new Date().toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short' })
+        };
+      }, true);
+
+      function storeSnapshot() {
+        if (!success.classList.contains('visible') || !snapshot) return;
+        if (!snapshot.barangay || !snapshot.description) {
+          snapshot = null;
+          return;
+        }
+        var reports = loadReports();
+        reports.push(snapshot);
+        saveReports(reports);
+        snapshot = null;
+        render();
+      }
+
+      new MutationObserver(storeSnapshot).observe(success, { attributes: true, attributeFilter: ['class'] });
+      render();
+    })();
+  </script>
+</body>
+
+</html>

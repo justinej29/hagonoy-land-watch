@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Dark soil base -->
+  <ellipse cx="16" cy="22" rx="14" ry="7" fill="#2E1503"/>
+  <!-- Medium soil layer -->
+  <ellipse cx="16" cy="20" rx="12" ry="5" fill="#5C2E0E"/>
+  <!-- Warm soil top layer -->
+  <ellipse cx="16" cy="18" rx="10" ry="4" fill="#7A3F1A"/>
+  <!-- Ground surface undulation -->
+  <path d="M6 14 Q10 9 16 12 Q22 9 26 14" stroke="#C17B30" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Amber top accent -->
+  <path d="M10 12 Q16 7 22 12" stroke="#DFA255" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</svg>

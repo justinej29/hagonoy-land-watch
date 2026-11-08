@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Practical solutions to land subsidence in Hagonoy, including community actions, government initiatives, and sustainable practices.">
+  <meta property="og:title" content="Solutions (Hagonoy Land Watch)">
+  <meta property="og:type" content="website">
+  <title>Solutions (Hagonoy Land Watch)</title>
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <style>
+    .solutions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--sp-24);
+      margin-top: var(--sp-32);
+    }
+
+    .solution-card {
+      background: var(--color-white);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      padding: var(--sp-24);
+      border-top: 5px solid var(--color-clay);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-12);
+    }
+
+    .solution-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(46, 21, 3, 0.14);
+    }
+
+    .solution-card--community {
+      border-top-color: var(--color-soil-warm);
+    }
+
+    .solution-card--govt {
+      border-top-color: var(--color-earth-green);
+    }
+
+    .solution-card--sustain {
+      border-top-color: var(--color-amber);
+    }
+
+    .solution-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .solution-card--community .solution-icon {
+      background: var(--color-amber-tint);
+      color: var(--color-soil-warm);
+    }
+
+    .solution-card--govt .solution-icon {
+      background: var(--color-green-tint);
+      color: var(--color-green-dark);
+    }
+
+    .solution-card--sustain .solution-icon {
+      background: var(--color-amber-tint);
+      color: var(--color-amber-hover);
+    }
+
+    .solution-title {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-text-dark);
+      margin: 0;
+    }
+
+    .solution-desc {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--color-text-body);
+      margin: 0;
+      flex: 1;
+    }
+
+    .solution-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: var(--font-heading);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      align-self: flex-start;
+    }
+
+    .solution-card--community .solution-tag {
+      background: var(--color-amber-tint);
+      color: var(--color-soil-warm);
+    }
+
+    .solution-card--govt .solution-tag {
+      background: var(--color-green-tint);
+      color: var(--color-green-dark);
+    }
+
+    .solution-card--sustain .solution-tag {
+      background: var(--color-amber-tint);
+      color: var(--color-amber-hover);
+    }
+
+    .checklist-section {
+      max-width: 720px;
+      margin-inline: auto;
+    }
+
+    .checklist-progress-wrap {
+      margin-bottom: var(--sp-24);
+    }
+
+    #checklist-progress {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 17px;
+      color: var(--color-soil);
+      margin-bottom: var(--sp-8);
+    }
+
+    .checklist-bar-track {
+      height: 10px;
+      background: var(--color-sand-pale);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    #checklist-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--color-earth-green);
+      border-radius: 5px;
+      transition: width 0.4s ease;
+    }
+
+    .checklist-items {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-12);
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-16);
+      background: var(--color-white);
+      border: 1.5px solid var(--color-sand);
+      border-radius: 12px;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .checklist-item:has(input:checked) {
+      background: var(--color-green-tint);
+      border-color: var(--color-earth-green);
+    }
+
+    .checklist-item input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      accent-color: var(--color-earth-green);
+      cursor: pointer;
+      margin-top: 2px;
+    }
+
+    .checklist-item-text {
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--color-text-body);
+      cursor: pointer;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .checklist-item:has(input:checked) .checklist-item-text {
+      text-decoration: line-through;
+      color: var(--color-green-dark);
+    }
+
+    .steps-intro {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-16);
+      background: var(--color-amber-tint);
+      border-left: 5px solid var(--color-amber);
+      border-radius: 0 12px 12px 0;
+      padding: var(--sp-16) var(--sp-24);
+      margin-bottom: var(--sp-32);
+      max-width: 720px;
+    }
+
+    @media (max-width: 600px) {
+      .solutions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .site-footer .footer-col--credits,
+    .site-footer .footer-col--credits .footer-heading,
+    .site-footer .footer-col--credits .footer-credits,
+    .site-footer .footer-col--credits .footer-credits dt,
+    .site-footer .footer-col--credits .footer-credits dd {
+      text-align: center !important;
+    }
+
+    .site-footer .footer-col--credits .credit-name {
+      display: block;
+      margin: 0 0 4px;
+    }
+
+    .site-footer .footer-col--credits .credit-name:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body class="page-solutions">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <nav class="site-nav-rail" aria-label="Main navigation">
+    <a href="index.html" class="nav-rail-brand" aria-label="Hagonoy Land Watch (Home)">
+    <img class="nav-rail-brand-icon" src="assets/icon.png" alt="" width="40" height="40">
+        <rect x="4" y="22" width="24" height="4" rx="2" fill="#7A3F1A" />
+        <rect x="4" y="17" width="24" height="4" rx="2" fill="#9E5528" />
+        <rect x="4" y="12" width="24" height="4" rx="2" fill="#C17B30" />
+        <path d="M8 12 Q16 4 24 12" stroke="#E9A344" stroke-width="1.5" fill="none" stroke-linecap="round" />
+        <path d="M11 12 Q16 7 21 12" stroke="#E9A344" stroke-width="1" fill="none" stroke-linecap="round"
+          opacity="0.6" />
+      </svg>
+      <span class="nav-rail-brand-text">Hagonoy<br>Land Watch</span>
+    </a>
+    <div class="nav-rail-geo" aria-hidden="true">
+      <svg viewBox="0 0 56 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 9 Q14 3 28 7 Q42 11 54 5" stroke="#E9A344" stroke-width="0.7" opacity="0.5" fill="none" />
+        <path d="M2 6 Q14 1 28 4 Q42 7 54 2" stroke="#E9A344" stroke-width="0.5" opacity="0.3" fill="none" />
+      </svg>
+    </div>
+    <div class="nav-rail-items">
+      <a href="index.html" class="nav-rail-item" aria-label="Home">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        <span class="nav-rail-label">Home</span>
+      </a>
+      <a href="about.html" class="nav-rail-item" aria-label="About Land Subsidence">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <polyline points="10 9 9 9 8 9" />
+        </svg>
+        <span class="nav-rail-label">About</span>
+      </a>
+      <a href="causes-effects.html" class="nav-rail-item" aria-label="Causes and Effects">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+        </svg>
+        <span class="nav-rail-label">Causes</span>
+      </a>
+      <div class="nav-rail-divider" aria-hidden="true"></div>
+      <a href="community-impact.html" class="nav-rail-item" aria-label="Community Impact">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        <span class="nav-rail-label">Impact</span>
+      </a>
+      <a href="solutions.html" class="nav-rail-item" aria-current="page" aria-label="Solutions">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+        </svg>
+        <span class="nav-rail-label">Solutions</span>
+      </a>
+      <div class="nav-rail-divider" aria-hidden="true"></div>
+      <a href="interactive.html" class="nav-rail-item" aria-label="Interactive Map and Quiz">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+          <line x1="8" y1="2" x2="8" y2="18" />
+          <line x1="16" y1="6" x2="16" y2="22" />
+        </svg>
+        <span class="nav-rail-label">Map</span>
+      </a>
+      <a href="references.html" class="nav-rail-item" aria-label="References and Sources">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>
+        <span class="nav-rail-label">Sources</span>
+      </a>
+    </div>
+    <div class="nav-rail-footer">
+      <span class="nav-rail-footer-text">HLW &copy; 2026</span>
+    </div>
+  </nav>
+
+  <header class="site-topbar" role="banner">
+    <div class="topbar-inner">
+      <a href="index.html" class="topbar-site-name" aria-label="Hagonoy Land Watch (Home)">
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+          <rect x="4" y="22" width="24" height="4" rx="2" fill="#7A3F1A" />
+          <rect x="4" y="17" width="24" height="4" rx="2" fill="#9E5528" />
+          <rect x="4" y="12" width="24" height="4" rx="2" fill="#C17B30" />
+          <path d="M8 12 Q16 4 24 12" stroke="#E9A344" stroke-width="1.5" fill="none" stroke-linecap="round" />
+        </svg>
+        Hagonoy Land Watch
+      </a>
+      <button class="nav-menu-btn" id="nav-menu-btn" aria-expanded="false" aria-controls="nav-drawer"
+        aria-label="Open navigation menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+        Menu
+      </button>
+    </div>
+  </header>
+
+  <div class="nav-drawer-overlay" id="nav-drawer-overlay" aria-hidden="true"></div>
+
+  <nav class="nav-drawer" id="nav-drawer" aria-label="Main navigation" aria-hidden="true">
+    <div class="nav-drawer-header">
+      <a href="index.html" class="nav-drawer-brand" aria-label="Hagonoy Land Watch (Home)">
+        <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect x="4" y="22" width="24" height="4" rx="2" fill="#7A3F1A" />
+          <rect x="4" y="17" width="24" height="4" rx="2" fill="#9E5528" />
+          <rect x="4" y="12" width="24" height="4" rx="2" fill="#C17B30" />
+          <path d="M8 12 Q16 4 24 12" stroke="#E9A344" stroke-width="1.5" fill="none" />
+        </svg>
+        Hagonoy Land Watch
+      </a>
+      <button class="nav-drawer-close" id="nav-drawer-close" aria-label="Close navigation menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <div class="nav-drawer-items">
+      <a href="index.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        Home
+      </a>
+      <a href="about.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+        </svg>
+        About
+      </a>
+      <a href="causes-effects.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+        </svg>
+        Causes
+      </a>
+      <a href="community-impact.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        Impact
+      </a>
+      <a href="solutions.html" class="nav-drawer-item" aria-current="page">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z" />
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+        </svg>
+        Solutions
+      </a>
+      <a href="interactive.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+          <line x1="8" y1="2" x2="8" y2="18" />
+          <line x1="16" y1="6" x2="16" y2="22" />
+        </svg>
+        Map &amp; Quiz
+      </a>
+      <a href="references.html" class="nav-drawer-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>
+        Sources
+      </a>
+    </div>
+    <div class="nav-drawer-footer">Hagonoy Land Watch &mdash; School Project</div>
+  </nav>
+
+  <main id="main-content">
+
+    <div class="page-header-band">
+      <div class="container">
+        <p class="eyebrow" style="color:var(--color-sand-light);">What Can We Do?</p>
+        <h1>Solutions to Land Subsidence</h1>
+        <p class="lead lead--wide page-header-desc">Change starts at every level, from each household to the national
+          government. Here are proven actions that work.</p>
+      </div>
+    </div>
+
+    <section class="section bg-cream fade-in" aria-labelledby="community-heading">
+      <div class="container">
+        <div class="section-header section-header--left">
+          <p class="eyebrow">Section 1</p>
+          <h2 id="community-heading">Community Actions</h2>
+          <div class="amber-bar" aria-hidden="true"></div>
+          <p class="section-intro">Small changes in daily habits, especially water use, have a big impact when many
+            families do them together.</p>
+        </div>
+
+        <div class="solutions-grid">
+          <div class="solution-card solution-card--community fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://region3.nia.gov.ph/content/awarded-shallow-tube-well-pumps-now-use-farming-activities"
+                  target="_blank" rel="noopener noreferrer">region3.nia.gov.ph</a></span>
+              <img class="card-img" src="assets/Reduce Groundwater Pumping.png"
+                alt="Photo of a farmer using a water pump in a rice field" loading="lazy">
+            </div>
+            <span class="solution-tag">Water Conservation</span>
+            <h3 class="solution-title">Reduce Groundwater Pumping</h3>
+            <p class="solution-desc">Use water only as needed. Fix leaking pipes quickly. Collect rainwater for
+              gardening and washing. Every liter saved keeps the soil in place.</p>
+          </div>
+
+          <div class="solution-card solution-card--community fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://i0.wp.com/coverstory.ph/wp-content/uploads/2023/04/Raincollector.jpeg?fit=583%2C406&amp;ssl=1"
+                  target="_blank" rel="noopener noreferrer">coverstory.ph</a></span>
+              <img class="card-img" src="assets/Install Rainwater Collectors.png"
+                alt="Photo of a rainwater collection system on a roof" loading="lazy">
+            </div>
+            <span class="solution-tag">Rainwater</span>
+            <h3 class="solution-title">Install Rainwater Collectors</h3>
+            <p class="solution-desc">Simple roof gutters and storage tanks can supply water for non-drinking uses.
+              This reduces dependence on deep wells that drain the aquifer.</p>
+          </div>
+
+          <div class="solution-card solution-card--community fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a href="https://share.google/KMibeZmtdGZmMYoII"
+                  target="_blank" rel="noopener noreferrer">coverstory.ph</a></span>
+              <img class="card-img" src="assets/Plant Trees Along Riverbanks.png"
+                alt="Photo of people planting trees along riverbanks" loading="lazy">
+            </div>
+            <span class="solution-tag">Environment</span>
+            <h3 class="solution-title">Plant Trees Along Riverbanks</h3>
+            <p class="solution-desc">Tree roots hold soil together and allow rainwater to slowly soak into the ground.
+              Planting mangroves near coasts also protects against flooding.</p>
+          </div>
+
+          <div class="solution-card solution-card--community fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.rappler.com/environment/aerotropolis-airport-heightens-disaster-risks-communities-bulacan/"
+                  target="_blank" rel="noopener noreferrer">rappler.com</a></span>
+              <img class="card-img" src="assets/Organize Community Education.png"
+                alt="Photo of a community meeting in a barangay hall" loading="lazy">
+            </div>
+            <span class="solution-tag">Awareness</span>
+            <h3 class="solution-title">Organize Community Education</h3>
+            <p class="solution-desc">Hold barangay meetings to discuss warning signs of subsidence. Share this website
+              with neighbors. Informed families make safer choices.</p>
+          </div>
+
+          <div class="solution-card solution-card--community fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://science.upd.edu.ph/up-geologists-report-subsidence-rates-in-select-ph-metropolitan-cities/"
+                  target="_blank" rel="noopener noreferrer">science.upd.edu.ph</a></span>
+              <img class="card-img" src="assets/download.jpg" alt="Photo of a cracked wall in a house"
+                loading="lazy">
+            </div>
+            <span class="solution-tag">Reporting</span>
+            <h3 class="solution-title">Report Cracks and Sinking</h3>
+            <p class="solution-desc">Document cracks in walls, uneven floors, or flooded roads. Report them to your
+              barangay official and use the form on our Interactive page.</p>
+          </div>
+
+          <div class="solution-card solution-card--community fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://images.spot.ph/dynsto/1760329800-518342459_1057517136562925_8992824351798578313_n.jpg?fit=cover&amp;width=960&amp;q=82"
+                  target="_blank" rel="noopener noreferrer">spot.ph</a></span>
+              <img class="card-img" src="assets/Build a Household Emergency Plan.png"
+                alt="Photo of a family practicing an emergency evacuation drill" loading="lazy">
+            </div>
+            <span class="solution-tag">Preparedness</span>
+            <h3 class="solution-title">Build a Household Emergency Plan</h3>
+            <p class="solution-desc">Know the evacuation routes from your barangay. Keep emergency supplies ready.
+              Flooding risk is higher in areas that have already sunk.</p>
+          </div>
+        </div>
+
+        <figure class="img-figure fade-in">
+          <figcaption class="img-source">Source: <a
+              href="https://www.onenews.ph/articles/in-photos-living-amid-flood-in-hagonoy-bulacan" target="_blank"
+              rel="noopener noreferrer">OneNews.ph</a></figcaption>
+          <img class="wide-img" src="assets/community meeting, tree planting, or rainwater collection in action.png"
+            alt="Photo of a community meeting in a barangay hall" loading="lazy">
+        </figure>
+      </div>
+    </section>
+
+    <span class="soil-divider" aria-hidden="true"></span>
+
+    <section class="section bg-parchment fade-in" aria-labelledby="govt-heading">
+      <div class="container">
+        <div class="section-header section-header--left">
+          <p class="eyebrow">Section 2</p>
+          <h2 id="govt-heading">Government Initiatives</h2>
+          <div class="amber-bar" aria-hidden="true"></div>
+          <p class="section-intro">Government agencies have the authority to regulate water use and fund long-term
+            solutions. These are key programs in place.</p>
+        </div>
+
+        <div class="solutions-grid">
+          <div class="solution-card solution-card--govt fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://bundokdrilling.com/projects/water-well-drilling" target="_blank"
+                  rel="noopener noreferrer">bundokdrilling.com</a></span>
+              <img class="card-img" src="assets/Groundwater Extraction Permits.png"
+                alt="Photo of a government office issuing permits" loading="lazy">
+            </div>
+            <span class="solution-tag">Regulation</span>
+            <h3 class="solution-title">Groundwater Extraction Permits</h3>
+            <p class="solution-desc">The National Water Resources Board (NWRB) issues permits for deep wells and
+              monitors extraction levels. Unauthorized wells can be sealed to protect the aquifer.</p>
+          </div>
+
+          <div class="solution-card solution-card--govt fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a href="https://share.google/GQ28NagzQF9L8Tf1o"
+                  target="_blank" rel="noopener noreferrer">google.com</a></span>
+              <img class="card-img" src="assets/PHIVOLCS Hazard Mapping.png" alt="Photo of a PHIVOLCS hazard map"
+                loading="lazy">
+            </div>
+            <span class="solution-tag">Monitoring</span>
+            <h3 class="solution-title">PHIVOLCS Hazard Mapping</h3>
+            <p class="solution-desc">The Philippine Institute of Volcanology and Seismology maps geological hazards.
+              Their data helps local governments identify which areas need urgent attention.</p>
+          </div>
+
+          <div class="solution-card solution-card--govt fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a href="https://share.google/GQ28NagzQF9L8Tf1o"
+                  target="_blank" rel="noopener noreferrer">google.com</a></span>
+              <img class="card-img" src="assets/Flood Control Infrastructure.png"
+                alt="Photo of a flood control structure such as a dike or drainage canal" loading="lazy">
+            </div>
+            <span class="solution-tag">Infrastructure</span>
+            <h3 class="solution-title">Flood Control Infrastructure</h3>
+            <p class="solution-desc">The Department of Public Works and Highways (DPWH) builds dikes, drainage canals,
+              and flood barriers. In Hagonoy, these protect communities from worsening floods linked to sinking land.
+            </p>
+          </div>
+
+          <div class="solution-card solution-card--govt fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a href="https://share.google/5wrDTAENilHlBnvCr"
+                  target="_blank" rel="noopener noreferrer">google.com</a></span>
+              <img class="card-img" src="assets/Land Use Zoning Updates.png"
+                alt="Photo of a local government office with zoning maps" loading="lazy">
+            </div>
+            <span class="solution-tag">Land Use</span>
+            <h3 class="solution-title">Land Use Zoning Updates</h3>
+            <p class="solution-desc">Local government units can update their Comprehensive Land Use Plans (CLUP) to
+              restrict heavy construction in high-risk subsidence zones.</p>
+          </div>
+
+          <div class="solution-card solution-card--govt fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a href="https://share.google/NKmZGtMCtxC4gKTmQ"
+                  target="_blank" rel="noopener noreferrer">google.com</a></span>
+              <img class="card-img" src="assets/MGB Geological Surveys.png"
+                alt="Photo of a geologist conducting a field survey" loading="lazy">
+            </div>
+            <span class="solution-tag">Research</span>
+            <h3 class="solution-title">MGB Geological Surveys</h3>
+            <p class="solution-desc">The Mines and Geosciences Bureau (MGB) conducts field surveys to measure land
+              movement. Their studies give communities scientific data to support requests for help.</p>
+          </div>
+
+          <div class="solution-card solution-card--govt fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.cityofilaganwaterdistrict.gov.ph/developments.html" target="_blank"
+                  rel="noopener noreferrer">City of Iligan Water District</a></span>
+              <img class="card-img" src="assets/Piped Water System Expansion.png"
+                alt="Photo of a municipal water system or water treatment plant" loading="lazy">
+            </div>
+            <span class="solution-tag">Water Supply</span>
+            <h3 class="solution-title">Piped Water System Expansion</h3>
+            <p class="solution-desc">Expanding safe municipal water supply reduces families' need to dig private wells.
+              Less well use means less groundwater withdrawal and slower sinking.</p>
+          </div>
+        </div>
+
+        <figure class="img-figure fade-in">
+          <figcaption class="img-source">Source: <a href="https://www.dpwh.gov.ph/dpwh/news/38205" target="_blank"
+              rel="noopener noreferrer">www.dpwh.gov.ph</a></figcaption>
+          <img class="wide-img" src="assets/government program.png"
+            alt="Photo of a government office or agency implementing one of the initiatives" loading="lazy">
+        </figure>
+      </div>
+    </section>
+
+    <span class="soil-divider" aria-hidden="true"></span>
+
+    <section class="section bg-cream fade-in" aria-labelledby="sustain-heading">
+      <div class="container">
+        <div class="section-header section-header--left">
+          <p class="eyebrow">Section 3</p>
+          <h2 id="sustain-heading">Sustainable Practices</h2>
+          <div class="amber-bar" aria-hidden="true"></div>
+          <p class="section-intro">Long-term habits that protect the land and the water beneath it are essential for
+            today's community and future generations.</p>
+        </div>
+
+        <div class="solutions-grid">
+          <div class="solution-card solution-card--sustain fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://scceh.com/NewHome/Programs/WaterResources/DroughtResponse/WaterUseEfficiency.aspx"
+                  target="_blank" rel="noopener noreferrer">SCCEH</a></span>
+              <img class="card-img" src="assets/Drip Irrigation for Farms.png"
+                alt="Photo of a farm using drip irrigation" loading="lazy">
+            </div>
+            <span class="solution-tag">Agriculture</span>
+            <h3 class="solution-title">Drip Irrigation for Farms</h3>
+            <p class="solution-desc">Drip irrigation delivers water directly to plant roots. It uses up to 50% less
+              water than flood irrigation, reducing how much is pumped from the ground.</p>
+          </div>
+
+          <div class="solution-card solution-card--sustain fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.oneearth.org/sowing-seeds-of-inspiration-in-the-philippines-with-mangrove-reforestation/"
+                  target="_blank" rel="noopener noreferrer">One Earth</a></span>
+              <img class="card-img" src="assets/Restore Wetlands and Mangroves.png"
+                alt="Photo of a restored wetland or mangrove area" loading="lazy">
+            </div>
+            <span class="solution-tag">Reforestation</span>
+            <h3 class="solution-title">Restore Wetlands and Mangroves</h3>
+            <p class="solution-desc">Mangroves and wetlands act as natural sponges. They absorb floodwater, reduce
+              erosion, and help replenish groundwater. Protecting existing ones is the first step.</p>
+          </div>
+
+          <div class="solution-card solution-card--sustain fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.civilengineeredforsuccess.co.uk/civil-engineered-for-success-blog/xaawhnkoy5q1udmrr7rkqev03sjtvx"
+                  target="_blank" rel="noopener noreferrer">Civil Engineered for Success</a></span>
+              <img class="card-img" src="assets/Permeable Paving and Green Roofs.png"
+                alt="Photo of permeable pavement or a green roof" loading="lazy">
+            </div>
+            <span class="solution-tag">Construction</span>
+            <h3 class="solution-title">Permeable Paving and Green Roofs</h3>
+            <p class="solution-desc">Concrete and asphalt stop rainwater from soaking into the ground. Permeable
+              pavement lets water pass through and helps refill the aquifer naturally.</p>
+          </div>
+
+          <div class="solution-card solution-card--sustain fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.rappler.com/philippines/luzon/mobile-solar-pumps-provide-relief-farmers-central-luzon/"
+                  target="_blank" rel="noopener noreferrer">Rappler</a></span>
+              <img class="card-img" src="assets/mobile-solar-pump-DOST-bulacan.png"
+                alt="Photo of solar-powered water pumps" loading="lazy">
+            </div>
+            <span class="solution-tag">Energy</span>
+            <h3 class="solution-title">Solar-Powered Water Pumps</h3>
+            <p class="solution-desc">Solar pumps can collect surface or rainwater instead of groundwater. They run at
+              low cost after installation and are ideal for barangay-level water systems.</p>
+          </div>
+
+          <div class="solution-card solution-card--sustain fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://manilawaterfoundation.org/news/2022-04-06/wash-and-learn-world-water-day"
+                  target="_blank" rel="noopener noreferrer">Manila Water Foundation</a></span>
+              <img class="card-img" src="assets/School Curriculum on Land Science.png"
+                alt="Photo of students in a classroom learning about land science" loading="lazy">
+            </div>
+            <span class="solution-tag">Education</span>
+            <h3 class="solution-title">School Curriculum on Land Science</h3>
+            <p class="solution-desc">Teaching students about geology and water cycles builds long-term environmental
+              awareness. Young people who understand the problem grow into leaders who act on it.</p>
+          </div>
+
+          <div class="solution-card solution-card--sustain fade-in">
+            <div class="card-img-wrap">
+              <span class="img-source img-source--overlay">Source: <a
+                  href="https://www.ndmu.edu.ph/post/ndmu-civil-engineers-lead-feasibility-study-for-sustainable-reservoir-project-in-lake-sebu"
+                  target="_blank" rel="noopener noreferrer">NDMU</a></span>
+              <img class="card-img" src="assets/Community-Led Land Monitoring.png"
+                alt="Photo of community volunteers measuring land subsidence with simple tools" loading="lazy">
+            </div>
+            <span class="solution-tag">Monitoring</span>
+            <h3 class="solution-title">Community-Led Land Monitoring</h3>
+            <p class="solution-desc">Barangay volunteers can track changes in ground level using simple tools such as
+              measuring sticks at fixed points. Regular records reveal how fast an area is sinking.</p>
+          </div>
+        </div>
+
+        <figure class="img-figure fade-in">
+          <figcaption class="img-source">Source: <a href="https://ftp.semiraramining.com/csr/content/Employee_Engagement"
+              target="_blank" rel="noopener noreferrer">Semirara Mining</a></figcaption>
+          <img class="wide-img" src="assets/wetland restoration, permeable paving, or community water monitoring.png"
+            alt="Photo of a sustainable practice such as drip irrigation, mangrove planting, or solar water pumps"
+            loading="lazy">
+        </figure>
+      </div>
+    </section>
+
+    <span class="soil-divider" aria-hidden="true"></span>
+
+    <section class="section bg-parchment fade-in" id="today-checklist" aria-labelledby="checklist-heading">
+      <div class="container">
+        <div class="section-header section-header--left">
+          <p class="eyebrow">Take Action</p>
+          <h2 id="checklist-heading">What You Can Do Today</h2>
+          <div class="amber-bar" aria-hidden="true"></div>
+          <p class="section-intro">Check off actions you can take right now. Every step matters.</p>
+        </div>
+
+        <div class="checklist-section">
+          <div class="checklist-progress-wrap">
+            <p id="checklist-progress" aria-live="polite" aria-atomic="true">0 of 8 done</p>
+            <div class="checklist-bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="8"
+              aria-labelledby="checklist-progress">
+              <div id="checklist-bar-fill"></div>
+            </div>
+          </div>
+
+          <ul class="checklist-items" id="action-checklist">
+            <li class="checklist-item">
+              <input type="checkbox" id="chk-1" class="checklist-check">
+              <label class="checklist-item-text" for="chk-1">Fix any leaking faucets or pipes at home this week.</label>
+            </li>
+            <li class="checklist-item">
+              <input type="checkbox" id="chk-2" class="checklist-check">
+              <label class="checklist-item-text" for="chk-2">Set up a simple rainwater collector for your garden or
+                yard.</label>
+            </li>
+            <li class="checklist-item">
+              <input type="checkbox" id="chk-3" class="checklist-check">
+              <label class="checklist-item-text" for="chk-3">Share this website with one neighbor or family member
+                today.</label>
+            </li>
+            <li class="checklist-item">
+              <input type="checkbox" id="chk-4" class="checklist-check">
+              <label class="checklist-item-text" for="chk-4">Check the walls and floors of your home for new cracks.
+                Take a photo and date it.</label>
+            </li>
+            <li class="checklist-item">
+              <input type="checkbox" id="chk-5" class="checklist-check">
+              <label class="checklist-item-text" for="chk-5">Plant one tree or shrub near a drain or open ground to help
+                absorb rainwater.</label>
+            </li>
+            <li class="checklist-item">
+              <input type="checkbox" id="chk-6" class="checklist-check">
+              <label class="checklist-item-text" for="chk-6">Report any road cracks, flooded areas, or sinking ground to
+                your barangay captain.</label>
+            </li>
+            <li class="checklist-item">
+              <input type="checkbox" id="chk-7" class="checklist-check">
+              <label class="checklist-item-text" for="chk-7">Learn your barangay's evacuation route in case of
+                flooding.</label>
+            </li>
+            <li class="checklist-item">
+              <input type="checkbox" id="chk-8" class="checklist-check">
+              <label class="checklist-item-text" for="chk-8">Use the Report form on the Interactive page to document a
+                problem you have noticed.</label>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="cta-band">
+      <div class="container">
+        <div class="cta-band-inner">
+          <div class="cta-band-text">
+            <h2>See the Barangay Risk Map</h2>
+            <p>Find out which barangays have high, moderate, or low vulnerability, and explore the interactive quiz and
+              FAQ.</p>
+          </div>
+          <a href="interactive.html" class="btn btn--cta">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
+            </svg>
+            Open Interactive Page
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>About This Site</h3>
+          <p>Hagonoy Land Watch is a community awareness project about land subsidence (<span lang="fil" style="color:#ffffff;">paglubog ng
+              lupa</span>) in Hagonoy, Bulacan, Philippines.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="causes-effects.html">Causes &amp; Effects</a></li>
+            <li><a href="community-impact.html">Community Impact</a></li>
+            <li><a href="solutions.html">Solutions</a></li>
+            <li><a href="interactive.html">Interactive</a></li>
+            <li><a href="references.html">References</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-col--credits">
+          <h3 class="footer-heading">Project Credits</h3>
+          <dl class="footer-credits">
+            <dt>Student / Group</dt>
+            <dd class="verify">
+              <span class="credit-name">John Paul F. Carlos</span>
+              <span class="credit-name">Justine James V. Dela Cruz</span>
+              <span class="credit-name">Geron Adrian E. Jose</span>
+              <span class="credit-name">John Lenard C. Romeroso</span>
+              <span class="credit-name">Ishi B. Trillana</span>
+            </dd>
+            <dt>Course</dt>
+            <dd class="verify">MST 101A - ENVIRONMENTAL SCIENCE</dd>
+            <dt>School</dt>
+            <dd class="verify">Bulacan State University Hagonoy Campus</dd>
+            <dt>Submitted</dt>
+            <dd class="verify">November 8, 2026</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="footer-disclaimer" role="note">
+        <strong>Disclaimer:</strong> This is a school project. It is not an official government website. For
+        emergencies, call <strong>911</strong>.
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 Hagonoy Land Watch (School project)</p>
+        <a href="#main-content" class="back-to-top" aria-label="Back to top">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            aria-hidden="true" focusable="false">
+            <polyline points="18 15 12 9 6 15" />
+          </svg>
+          Back to top
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/checklist.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+
+</html>
